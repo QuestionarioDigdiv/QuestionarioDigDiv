@@ -1,0 +1,1427 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Questionario Competenze Digitali</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Segoe+UI:wght@400;600&display=swap');
+
+    :root{
+      --primary:#3498db;
+      --primary-dark:#2980b9;
+      --text:#2c3e50;
+      --muted:#6b7280;
+      --bg:#f5f7fa;
+      --card:#ffffff;
+      --border:#e0e0e0;
+      --shadow:0 6px 20px rgba(0,0,0,0.05);
+      --radius:12px;
+    }
+
+    *{box-sizing:border-box}
+    body{
+      background-color:var(--bg);
+      font-family:'Segoe UI','Helvetica Neue',Arial,sans-serif;
+      margin:0;
+      color:#333;
+    }
+    .title-box{
+      font-family:'Playfair Display',serif;
+      font-size:38px;
+      font-weight:600;
+      color:var(--text);
+      text-align:center;
+      padding:40px 20px 10px;
+      background:linear-gradient(to right,#ffffff,#f2f2f2);
+      border-bottom:1px solid #ddd;
+      box-shadow:0 4px 6px rgba(0,0,0,0.05);
+      position:relative;
+    }
+    .title-box::after{
+      content:'';
+      display:block;
+      width:60px;height:3px;background-color:var(--primary);
+      margin:10px auto 0;border-radius:2px;
+    }
+    .question-box{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      max-width:820px;
+      margin:40px auto;
+      padding:28px 30px;
+      text-align:left;
+    }
+    .header-row{
+      display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:16px;
+    }
+    #user-name{
+      flex:1; min-width:220px;
+      padding:12px;font-size:16px;border:1px solid #ccc;border-radius:6px;
+      transition:border-color .3s;
+    }
+    #user-name:focus{border-color:var(--primary);outline:none}
+    .progress{
+      font-size:14px;color:var(--muted);
+      margin-left:auto
+    }
+    .question-title{
+      font-size:21px;font-weight:600;color:var(--text);margin:18px 0 8px;
+    }
+    .question-sub{
+      font-size:14px;color:var(--muted);margin:4px 0 16px;
+    }
+    .options{display:flex;flex-direction:column;gap:10px;margin:10px 0 12px}
+    .opt{
+      display:flex;align-items:flex-start;gap:10px;
+      padding:10px 12px;border:1px solid #e5e7eb;border-radius:10px;
+      transition:background .2s,border-color .2s;
+    }
+    .opt:hover{background:#f8fafc;border-color:#d1d5db}
+    .opt input{margin-top:3px}
+    .grid-2{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px}
+    .img-wrap{margin:18px 0;text-align:center}
+    .img-wrap img{
+      display:block;margin:0 auto;max-width:100%;border-radius:10px;
+      box-shadow:0 2px 10px rgba(0,0,0,0.1)
+    }
+    .button-box{margin-top:22px;display:flex;gap:10px;justify-content:center}
+    button{
+      background-color:var(--primary);color:#fff;font-size:16px;border:none;border-radius:30px;
+      padding:12px 24px;cursor:pointer;box-shadow:0 4px 10px rgba(0,123,255,0.2);
+      transition:background-color .3s ease, transform .1s ease;
+    }
+    button:hover{background-color:var(--primary-dark);transform:translateY(-1px)}
+    button.secondary{background:#e5e7eb;color:#111;box-shadow:none}
+    .muted{color:var(--muted);font-size:13px}
+    .hidden{display:none !important}
+    .matrix{width:100%;border-collapse:collapse;margin-top:8px}
+    .matrix th,.matrix td{border:1px solid #e5e7eb;padding:8px;text-align:center}
+    .matrix th{background:#f8fafc;font-weight:600}
+    .pill{
+      display:inline-block;background:#eef6fd;color:#2468a2;border:1px solid #cde4fb;
+      padding:2px 10px;border-radius:999px;font-size:12px;margin-left:8px
+    }
+    .notice{
+      background:#f8fafc;border:1px dashed #cbd5e1;border-radius:10px;
+      padding:10px 12px;color:#334155;font-size:14px;margin:10px 0
+    }
+    .rank-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+    .rank-item{padding:10px 12px;border:1px solid #e5e7eb;border-radius:10px;background:#fff;cursor:grab}
+    .rank-item.dragging{opacity:.6}
+    .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+    /* Rendere scrollabili le tabelle matrix su schermi piccoli */
+.matrix-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.matrix {
+  min-width: 600px; /* evita che le colonne si comprimano troppo */
+  width: 100%;
+  border-collapse: collapse;
+}
+  </style>
+</head>
+<body>
+  <div class="title-box">Questionario Competenze Digitali over 50</div>
+
+  <div class="question-box" id="app">
+    <div class="header-row">
+      <input type="text" id="user-name" placeholder="Inserisci il tuo nome (richiesto)"/>
+      <div class="progress" id="progress">Domanda 1 di …</div>
+    </div>
+
+    <div id="q-wrap">
+      <!-- Qui viene renderizzata la domanda corrente -->
+    </div>
+
+    <div class="button-box">
+      <button class="secondary" id="backBtn" disabled>Indietro</button>
+      <button id="nextBtn">Avanti</button>
+    </div>
+
+    <div class="muted" id="helper"></div>
+  </div>
+
+  <script>
+    /***********************
+     * CONFIG SUPABASE
+     ***********************/
+    const SUPABASE_URL = 'https://lteztcnhpkleuvqeaphq.supabase.co';
+    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx0ZXp0Y25ocGtsZXV2cWVhcGhxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTI5MzE5MjYsImV4cCI6MjA2ODUwNzkyNn0.Wbvy9R5kVYRAjxzhbxK4d76ctqAT-ZyX4kaL7nqGFnc';
+
+    async function salvaRispostaSupabase(payload) {
+      try {
+        const res = await fetch(`${SUPABASE_URL}/rest/v1/Risposte`, {
+          method: 'POST',
+          headers: {
+            'apikey': SUPABASE_KEY,
+            'Authorization': 'Bearer ' + SUPABASE_KEY,
+            'Content-Type': 'application/json',
+            'Prefer': 'return=representation'
+          },
+          body: JSON.stringify(payload)
+        });
+        if (!res.ok) {
+          const t = await res.text();
+          console.error('Errore Supabase:', t);
+          alert("Errore Supabase: " + t);
+        }
+      } catch (e) {
+        console.error(e);
+        alert("Errore di rete: " + e.message);
+      }
+    }
+
+    /***********************
+     * MODELLI DOMANDE
+     ***********************/
+    // Tipi: single, multi, matrix, rank, text
+    // Per quesiti "conoscitivi" si può valorizzare "correct" (string) per il confronto.
+    // Ogni elemento può avere "image" (percorso/URL) mostrato sotto al testo.
+
+    const Q = [];
+    // Pagina di benvenuto
+Q.unshift({
+  id: 'welcome_page',
+  section: 'BENVENUTO',
+  text:'<p><strong>Benvenuti – Questionario sulle Competenze Digitali degli Over 50</strong></p><p>Questo questionario fa parte di una ricerca dedicata a esplorare il rapporto con le tecnologie digitali da parte delle persone over 50. L’intento è quello di raccogliere informazioni utili per comprendere meglio le competenze digitali in questa fascia d’età e favorire lo sviluppo di strumenti, servizi e percorsi formativi più inclusivi e accessibili.</p><p>Non ci sono risposte giuste o sbagliate: ogni contributo è importante e riflette esperienze reali, senza alcun tipo di valutazione.</p><p>Le risposte saranno raccolte in forma anonima e utilizzate esclusivamente per scopi di ricerca, ogni informazione fornita è preziosa per il successo dello studio.</p><p>Grazie fin da ora per la partecipazione!</p>',
+  type: 'welcome',
+  required: false,
+  buttonText: 'Inizia' // testo del pulsante
+}); 
+    // Domande sociodemografiche
+     Q.push(
+  {
+    id: 'Q001',
+    section: 'SOCIODemografico',
+    text: 'Data di nascita',
+    type: 'date',
+    required: true,
+  },
+  {
+    id: 'Q002',
+    section: 'SOCIODemografico',
+    text: 'Genere',
+    type: 'single',
+    required: true,
+    options: ['Maschio', 'Femmina']
+  },
+  {
+    id: 'Q003',
+    section: 'SOCIODemografico',
+    text: 'Regione di residenza',
+    type: 'dropdown',
+    required: true,
+    options: [
+      'Piemonte','Valle d’Aosta','Lombardia','Trentino-Alto Adige','Veneto',
+      'Friuli-Venezia Giulia','Liguria','Emilia-Romagna','Toscana','Umbria',
+      'Marche','Lazio','Abruzzo','Molise','Campania','Puglia','Basilicata',
+      'Calabria','Sicilia','Sardegna'
+    ]
+  },
+  {
+    id: 'Q004',
+    section: 'SOCIODemografico',
+    text: '<p><strong>In che tipo di zona si trova la casa?</p>\n<p>(Per "grande città" si intende un comune con una popolazione superiore a 500.000 abitanti.</p><p>Per "periferia o hinterland di una grande città" si intende un comune di qualsiasi grandezza confinante o adiacente ad una grande città.</p><p>Per "città" si intende un comune con una popolazione compresa fra 40.000 e 500.000 abitanti.</p><p>Per "cittadina" si intende un comune con una popolazione compresa fra 20.000 e 40.000 abitanti.</p><p>Per "campagna o piccolo centro" si intende un comune con una popolazione inferiore a 20.000 abitanti)</p>',
+    type: 'single',
+    required: true,
+    options: [
+      'In una grande città',
+      'Nella periferia o l’hinterland di una grande città',
+      'In una città',
+      'In una cittadina',
+      'In campagna o in un piccolo centro'
+    ]
+  },
+  {
+    id: 'Q005',
+    section: 'SOCIODemografico',
+    text: 'Fra quelli elencati, qual è il titolo di studio più elevato da Lei ottenuto?',
+    type: 'single',
+    required: true,
+    options: [
+      'Nessun titolo',
+      'Qualche anno di istruzione (ma senza aver conseguito l\'esame di seconda elementare)',
+      'Esame di seconda elementare',
+      'Licenza elementare',
+      'Scuola media o avviamento professionale',
+      'Diploma ginnasiale',
+      'Diploma di scuola professionale, scuola magistrale o istituto d’arte (3 anni)',
+      'Diploma di scuola magistrale o liceo artistico (4 anni)',
+      'Maturità liceale (classico, scientifico, linguistico, artistico, socio-psico-pedagogico)',
+      'Maturità tecnica, professionale o istituto d’arte (5 anni)',
+      'Altro titolo di studio non post-secondario'
+    ]
+  },
+  {
+    id: 'Q006',
+    section: 'SOCIODemografico',
+    text: 'Quale delle seguenti categorie descrive meglio la sua attuale situazione lavorativa?',
+    type: 'single',
+    required: true,
+    options: [
+      'In pensione da lavoro',
+      'Lavoratore dipendente o indipendente (incluso lavoro in attività di famiglia)',
+      'Disoccupato/a',
+      'Malato/a cronico/a o disabile',
+      'Casalingo/a'
+    ]
+  },
+  {
+    id: 'Q007',
+    section: 'SOCIODemografico',
+    text: 'Qual è il suo stato civile?\n(La risposta "mai sposato" comprende anche celibe e nubile.)',
+    type: 'single',
+    required: true,
+    options: [
+      'Coniugato/a e convivente con il coniuge',
+      'Convivenza ufficialmente riconosciuta',
+      'Coniugato/a, ma non convivente con il coniuge',
+      'Mai sposato/a',
+      'Divorziato/a',
+      'Vedovo/a',
+      'Altro (benestante, che vive di rendita, studente, che fa volontariato)'
+    ]
+  }
+);
+
+    // ====== BLOCCO: DISPOSITIVI ======
+    Q.push(
+       {
+        id:'Q008',
+        section:'DISPOSITIVI',
+        text:'Quali dei seguenti dispositivi possiedi o a quali hai accesso? (Scelta multipla)',
+        type:'multi',
+        options:['Computer fisso o portatile','Smartphone','Tablet / iPad','Smart TV','Nessun dispositivo digitale'],
+        allowOther:true,
+        image:null
+      },
+      // --- ramo NO
+      {
+        id:'Q009',
+        showIf:{id:'Q008', equals:'Nessun dispositivo digitale'},
+        section:'DISPOSITIVI',
+        text:'Di cosa avresti bisogno per imparare a usare un dispositivo digitale? (Risposta multipla)',
+        type:'multi',
+        options:['Avere un dispositivo personale','Pratica e dedizione','Interesse e iniziativa','Memoria e concentrazione'],
+        image:null
+      },
+      {
+        id:'Q010',
+        showIf:{id:'Q008', equals:'Nessun dispositivo digitale'},
+        section:'DISPOSITIVI',
+        text:'Quali difficoltà incontri (o pensi potresti incontrare) nell’imparare a usare un dispositivo digitale? (Risposta multipla)',
+        type:'multi',
+        options:['Difficoltà pratiche','Difficoltà di lettura e scrittura','Memoria e agilità mentale','Paura del dispositivo o timore di romperlo'],
+        image:null
+      },
+      {
+        id:'Q011',
+        showIf:{id:'Q008', equals:'Nessun dispositivo digitale'},
+        section:'DISPOSITIVI',
+        text:'Cosa pensi potrebbe aiutarti di più ad imparare a usare un dispositivo digitale? (Risposta multipla)',
+        type:'multi',
+        options:['Avere più tempo per fare pratica','Ricevere spiegazioni semplici e chiare','Avere qualcuno che ti supporta e ti guida','Ripetere spesso le stesse operazioni fino a sentirti sicuro'],
+        image:null
+      },
+      // Per ogni dispositivo selezionato chiediamo 3 sotto-domande (matrice ripetuta)
+      {
+        id:'Q012_Q013_Q014',
+        showIf:{id:'Q008', inSelected:[
+          'Computer fisso o portatile','Smartphone','Tablet / iPad','Smart TV'
+        ]},
+        section:'DISPOSITIVI',
+        text:'Per ciascun dispositivo selezionato, rispondi:',
+        type:'matrixPerItem',
+        perItemSource:'Q008',
+        columns:[
+          {key:'tempo', label:'Da quanto tempo lo utilizzi?', choices:['Meno di 1 anno','1-3 anni','3-5 anni','Più di 5 anni']},
+          {key:'agio', label:'Quanto ti senti a tuo agio nell’utilizzarlo?', choices:['Per niente','Poco','Abbastanza','Molto','Completamente a mio agio']},
+          {key:'frequenza', label:'Con quale frequenza lo usi?', choices:['Spesso','Occasionalmente','Mai']}
+        ],
+        image:null
+      },
+      // Domande aggiuntive per Computer
+      {
+        id:'Q015',
+        showIf:{id:'Q008', includes:'Computer fisso o portatile'},
+        section:'DISPOSITIVI',
+        text:' Chi ti ha insegnato ad utilizzare il computer?',
+        type:'multi',
+        options:['insegnante','famiglia','libri','autodidatta','colleghi','amici','tutorial online','altri'],
+        image:null
+      },
+      {
+        id:'Q016',
+        showIf:{id:'Q008', includes:'Computer fisso o portatile'},
+        section:'DISPOSITIVI',
+        text:'Quale sistema operativo possiede il tuo computer',
+        type:'single',
+        required: true,
+        options: [
+        'IOS',
+        'Windows',
+        'Linux',
+        'Altro',
+        'Non lo so'
+      ],
+        image:null
+      },
+      {
+        id:'Q017',
+        showIf:{id:'Q008', includes:'Computer fisso o portatile'},
+        section:'DISPOSITIVI',
+        text:'Quale browser (sistema di ricerca) utilizzi sul tuo computer?',
+        type:'multi',
+        required: true,
+        options: [
+        'Google Chrome',
+        'Safari',
+        'Microsoft Edge',
+        'Mozilla Firefox',
+        'Altro',
+        'Non lo so'
+      ],
+        image:null
+      },
+      {
+        id:'Q018',
+        showIf:{id:'Q008', includes:'Computer fisso o portatile'},
+        section:'DISPOSITIVI',
+        text:' Quali app usi più frequentemente? (Risposta multipla)',
+        type:'multi',
+        options:['Suite Office (Word, Excel, ecc.)','App per videoconferenze (Zoom, Teams, Meet, ecc.)','App per note e organizzazione (Evernote, Notion, ecc.)','App per gestione di progetti'],
+        allowOther:true,
+        image:null
+      },
+      {
+        id:'Q019',
+        showIf:{id:'Q018', includes:'Suite Office (Word, Excel, ecc.)'},
+        section:'DISPOSITIVI',
+        text:' Quale programma della Suite Office utilizzi di più? (Scelta multipla)',
+        type:'multi',
+        options:['Microsoft Word','Microsoft Excel','Microsoft PowerPoint','Microsoft OneNote'],
+        allowOther:true,
+        image:null
+      },
+      // Domande aggiuntive per Smartphone/Tablet
+      {
+         id:'Q020',
+       showIfAny:[
+          {id:'Q008', includes:'Smartphone'},
+        ],
+        section:'DISPOSITIVI',
+        text:'Quale sistema operativo utilizza il tuo Smartphone ',
+        type:'single',
+        required: true,
+        options: [
+        'IOS',
+        'Windows mobile',
+        'Android',
+        'Altro',
+        'Non lo so']
+      },
+      {
+         id:'Q021',
+       showIfAny:[
+          {id:'Q008', includes:'Smartphone'},
+        ],
+        section:'DISPOSITIVI',
+        text:'Quale browser (sistema di ricerca) utilizzi sul tuo Smartphone?',
+        type:'multi',
+        required: true,
+        options: [
+        'Google Chrome',
+        'Safari',
+        'Samsung Internet',
+        'Mozilla Firefox',
+        'Altro',
+        'Non lo so']
+      },
+      {
+        id:'Q022',
+        showIfAny:[
+          {id:'Q008', includes:'Smartphone'},
+          {id:'Q008', includes:'Tablet / iPad'}
+        ],
+        section:'DISPOSITIVI',
+        text:'Che cos’è il T9 negli Smartphone?',
+        type:'single',
+        options:[
+          'Un sistema di scrittura predittiva che suggerisce le parole mentre digiti',
+          'Un modello di smartphone di nuova generazione',
+          'Un’app per la messaggistica istantanea',
+          'Un formato di file per immagini',
+          'Non lo so'
+        ],
+        correct:'Un sistema di scrittura predittiva che suggerisce le parole mentre digiti',
+        image:null
+      },
+      {
+         id:'Q023',
+       showIfAny:[
+          {id:'Q008', includes:'Smartphone'},
+          {id:'Q008', includes:'Tablet / iPad'}
+        ],
+        section:'DISPOSITIVI',
+        text:'Sai cosa è uno screenshot?',
+        type:'single',
+        required: true,
+        options: [
+        'Si',
+        'No',
+        ]
+      },
+      // Domande aggiuntive per Smart TV
+      {
+        id:'Q024',
+        showIf:{id:'Q008', includes:'Smart TV'},
+        section:'DISPOSITIVI',
+        text:'(Smart TV) Cosa guardi principalmente? (Risposta multipla)',
+        type:'multi',
+        options:[
+          'Canali televisivi tradizionali',
+          'Piattaforme di streaming (Netflix, Prime Video, Disney+, ecc.)',
+          'YouTube o simili',
+          'Servizi on demand delle emittenti TV',
+          'Altro (specificare)'
+        ],
+        allowOther:true,
+        image:null
+      },
+      {
+        id:'Q025',
+        showIf:{id:'Q008', includes:'Smart TV'},
+        section:'DISPOSITIVI',
+        text:'(Smart TV) Quanto spesso utilizzi le funzioni “smart” della TV?',
+        type:'single',
+        options:['Quasi sempre','Spesso','Occasionalmente','Raramente','Mai'],
+        image:null
+      }
+    );
+
+    // ====== BLOCCO: INTERNET ======
+    Q.push(
+      {
+        id:'Q026',
+        section:'INTERNET',
+        text:'Tramite quale connessione accedi a Internet? (Scelta multipla)',
+        type:'multi',
+        options:['Wi-Fi di casa','Rete mobile (4G/5G)','Wi-Fi pubblico','Non utilizzo Internet'],
+        image:null
+      },
+      // Se "Non utilizzo Internet" è selezionato, le sotto-domande internet si saltano.
+      {
+        id:'Q027',
+        showIfNotSelected:{id:'Q026', value:'Non utilizzo Internet'},
+        section:'INTERNET',
+        text:'Negli ultimi 3 mesi hai utilizzato Internet per acquistare beni o servizi?',
+        type:'single',
+        options:['Sì','No','Non rispondo'],
+        image:null
+      },
+      {
+        id:'Q028',
+        showIf:{id:'Q027', equals:'Sì'},
+        section:'INTERNET',
+        text:'Per cosa hai usato Internet negli acquisti? (Frequenza per ciascuna voce)',
+        type:'matrix',
+        rows:[
+          'Acquistare articoli fisici (abbigliamento, elettronica, libri, ecc.)',
+          'Ordinare generi alimentari o fare la spesa online',
+          'Prenotare viaggi, biglietti o alloggi',
+          'Pagare bollette o tasse online',
+          'Ottenere coupon o sconti digitali',
+          'Comprare o vendere su marketplace (Amazon, eBay, Zalando)',
+          'Comprare o vendere su siti di annunci (Subito.it, Vinted)'
+        ],
+        columns:['Giornalmente','3-4 volte a settimana','1-2 volte a settimana','1-2 volte al mese','Raramente','Mai'],
+        image:null
+      },
+      {
+        id:'Q029',
+        showIfNotSelected:{id:'Q026', value:'Non utilizzo Internet'},
+        section:'INTERNET',
+        text:'Negli ultimi 3 mesi hai utilizzato Internet per comunicare con altre persone?',
+        type:'single',
+        options:['Sì','No','Non rispondo'],
+        image:null
+      },
+      {
+        id:'Q030',
+        showIf:{id:'Q029', equals:'Sì'},
+        section:'INTERNET',
+        text:' Con quale frequenza hai svolto le seguenti attività online hai svolto per comunicare con altre persone ? ',
+        type:'matrix',
+        rows:[
+          'Inviare o leggere e-mail',
+          'Fare videochiamate (Meet,Zoom, Facetime, WhatsApp video)',
+          'Chattare su servizi di messaggistica istantanea (WhatsApp, Telegram, Messenger)',
+          'Usare social network per comunicare (Facebook, Instagram, LinkedIn)'
+        ],
+        columns:['Giornalmente','3-4 volte a settimana','1-2 volte a settimana','1-2 volte al mese','Raramente','Mai'],
+        image:null
+      },
+      {
+        id:'Q031',
+        showIfNotSelected:{id:'Q026', value:'Non utilizzo Internet'},
+        section:'INTERNET',
+        text:'Negli ultimi 3 mesi hai utilizzato Internet per informarti o cercare contenuti?',
+        type:'single',
+        options:['Sì','No','Non rispondo'],
+        image:null
+      },
+      {
+        id:'Q032',
+        showIf:{id:'Q031', equals:'Sì'},
+        section:'INTERNET',
+        text:'Quali tipi di contenuti hai cercato? (Frequenza per ciascuna voce)',
+        type:'matrix',
+        rows:[
+          'Leggere notizie o articoli di attualità',
+          'Cercare informazioni su salute e assistenza sanitaria',
+          'Guardare film, programmi TV o video in streaming',
+          'Fare ricerche su Wikipedia o siti simili',
+          'Cercare informazioni su hobby o interessi personali (ricette, giardinaggio, bricolage, ecc.)',
+          'Cercare indicazioni stradali o mappe',
+          'Seguire i mercati finanziari'
+        ],
+        columns:['Giornalmente','3-4 volte a settimana','1-2 volte a settimana','1-2 volte al mese','Raramente','Mai fatto'],
+        image:null
+      },
+      {
+        id:'Q033',
+        showIfNotSelected:{id:'Q026', value:'Non utilizzo Internet'},
+        section:'INTERNET',
+        text:'Negli ultimi 3 mesi hai utilizzato Internet per servizi pubblici?',
+        type:'single',
+        options:['Sì','No','Non rispondo'],
+        image:null
+      },
+      {
+        id:'Q034',
+        showIf:{id:'Q033', equals:'Sì'},
+        section:'INTERNET',
+        text:'In che modo?',
+        type:'matrix',
+        rows:[
+          'Prenotare visite mediche online',
+          'Accedere a servizi pubblici digitali (SPID, CIE, Fascicolo Sanitario, Agenzia delle Entrate, INPS)',
+          'altro'
+        ],
+        columns:['Giornalmente','3-4 volte a settimana','1-2 volte a settimana','1-2 volte al mese','Raramente','Mai fatto'],
+        image:null
+      },
+      {
+        id:'Q035',
+        showIfNotSelected:{id:'Q026', value:'Non utilizzo Internet'},
+        section:'INTERNET',
+        text:'Negli ultimi 3 mesi hai utilizzato Internet per la gestione del patrimonio o per condurre investimenti online?',
+        type:'single',
+        options:['Sì','No','Non rispondo'],
+        image:null
+      },
+      {
+        id:'Q036',
+        showIf:{id:'Q035', equals:'Sì'},
+        section:'INTERNET',
+        text:'Indica con che frequenza svolgi le seguenti operazioni.',
+        type:'matrix',
+        rows:[
+          'Accedi al tuo conto online per controllare il saldo',
+          'Utilizzi app per monitorare le tue spese personali',
+          'Usi lo smartphone per effettuare bonifici o pagamenti',
+          'Controlli o ricevi notifiche sull’andamento dei mercati azionari tramite app o siti',
+          'Effettui operazioni di acquisto o vendita di azioni'
+        ],
+        columns:['Giornalmente','3-4 volte a settimana','1-2 volte a settimana','1-2 volte al mese','Raramente','Mai fatto'],
+        image:null
+      },
+    );
+
+    // ====== BLOCCO: LAVORO ======
+    Q.push(
+      {
+        id:'Q037',
+        section:'LAVORO',
+        text:'Attualmente svolgi attività lavorativa?',
+        type:'single',
+        options:['Sì','No','Non rispondo'],
+        image:null
+      },
+      {
+        id:'Q038',
+        showIf:{id:'Q037', equals:'Sì'},
+        section:'LAVORO',
+        text:'Rispondi Sì/No alle seguenti domande:',
+        type:'ynList',
+        items:[
+          'Hai mai utilizzato computer o Internet per lavoro?',
+          'Hai inviato candidature online negli ultimi 12 mesi?',
+          'Hai partecipato a corsi di formazione online negli ultimi 12 mesi?',
+          'Hai partecipato a riunioni online negli ultimi 12 mesi?',
+          'Hai mai utilizzato strumenti di condivisione file (Google Drive, Dropbox)?',
+          'Lavori o hai lavorato mai in smart working?'
+        ],
+        image:null
+      },
+      {
+        id:'Q039',
+        showIf:{id:'Q037', equals:'Sì'},
+        section:'LAVORO',
+        text:'Come valuteresti le tue competenze informatiche nel lavoro?',
+        type:'matrix',
+        rows:[
+          'Applicazioni di videoscrittura (es. Word)',
+          'Applicazioni di fogli di calcolo (es. Excel)',
+          'Applicazioni per database',
+          'Applicazioni per presentazioni (es. PowerPoint)',
+          'Applicazioni multimediali (audio, video, immagini)',
+          'Applicazioni per la progettazione di siti web',
+          'Motori di ricerca sul web (es. Google)',
+          'Applicazioni di comunicazione (es. email, videoconferenze)'
+        ],
+        columns:['Nessuna','Base','Intermedia','Avanzata'],
+        image:null
+      }
+    );
+
+    // ====== BLOCCO: SICUREZZA ======
+    Q.push(
+      {
+        id:'Q040',
+        section:'SICUREZZA',
+        text:'Solitamente prendi precauzioni per proteggere i tuoi dati online?',
+        type:'single',
+        options:['Sì','No','Non rispondo'],
+        image:null
+      },
+      {
+        id:'Q041',
+        showIf:{id:'Q040', equals:'Sì'},
+        section:'SICUREZZA',
+        text:'Seleziona le pratiche che adotti (Sì/No per ciascuna).',
+        type:'ynList',
+        items:[
+          'Utilizzi password complesse e diverse?',
+          'Cambi regolarmente le password?',
+          'Hai mai installato e/o aggiornato un antivirus?',
+          'Controlli solitamente le impostazioni di privacy sui social?'
+        ],
+        image:null
+      },
+      {
+        id:'Q042',
+        showIf:{id:'Q040', equals:'Sì'},
+        section:'SICUREZZA',
+        text:'Quale password ti sembra più sicura?',
+        type:'single',
+        options:[
+          'P4ssw0rd!',
+          'Maria1970',
+          'Tr*9kLm!28#q',
+          '1234567'
+        ],
+        correct:'Tr*9kLm!28#q',
+        image:null
+      }
+    );
+
+    // ====== BLOCCO: ICONE / CONOSCENZE ======
+    Q.push(
+      {
+        id:'Q043',
+        section:'ICONE',
+        text:' Quando compare questo simbolo vicino all’indirizzo di un sito web, cosa significa?',
+        type:'single',
+        options:[
+          'A. Il sito è stato visitato di recente',
+          'B. Il sito è a pagamento',
+          'C. La connessione tra il tuo dispositivo e il sito è sicura',
+          'D. Il sito non funziona senza password'
+        ],
+        correct:'A. La connessione tra il tuo dispositivo e il sito è sicura',
+        image:'www/lucchetto.jpg'
+      },
+      {
+        id:'Q044',
+        section:'ICONE',
+        text:'Cosa permette di fare questa icona sullo smartphone o computer?',
+        type:'single',
+        options:[
+          'A. Avviare la fotocamera',
+          'B. Spegnere il dispositivo',
+          'C. Aggiornare un’applicazione',
+          'D. Aprire il menu delle impostazioni'
+        ],
+        correct:'A. Aprire il menu delle impostazioni',
+        image:'www/ingranaggio.jpg'
+      },
+      {
+        id:'Q045',
+        section:'ICONE',
+        text:' Cosa rappresenta solitamente questa icona?',
+        type:'single',
+        options:[
+          'A. Email o messaggi',
+          'B. Rubrica dei contatti',
+          'C. Lista degli appuntamenti',
+          'D. Documenti salvati'
+        ],
+        correct:'A. Email o messaggi',
+        image:'www/email.jpg'
+      },
+      {
+        id:'Q046',
+        section:'ICONE',
+        text:'Quando questa icona è piena e luminosa, cosa indica?',
+        type:'single',
+        options:[
+          'A. Il dispositivo sta scaricando dati',
+          'B. È attiva la connessione Bluetooth',
+          'C. Sei connesso a Internet tramite rete wireless',
+          'D. Stai guardando un video in streaming'
+        ],
+        correct:'A. Sei connesso a Internet tramite rete wireless',
+        image:'www/wifi.png'
+      },
+      {
+        id:'Q047',
+        section:'ICONE',
+        text:' A cosa serve questa funzione su smartphone, tablet o computer?',
+        type:'single',
+        options:[
+          'A. Collegare dispositivi senza fili (cuffie, casse, tastiere)',
+          'B. Navigare in Internet ad alta velocità',
+          'C. Bloccare l’accesso al dispositivo',
+          'D. Salvare file nella memoria interna'
+        ],
+        correct:'A. Collegare dispositivi senza fili (cuffie, casse, tastiere)',
+        image:'www/blue.jpg'
+      },
+      {
+        id:'Q048',
+        section:'ICONE',
+        text:' Cosa puoi fare con questo tipo di codice?',
+        type:'single',
+        options:[
+          'A. Usarlo per aumentare la velocità di connessione Internet',
+          'B. Scansionarlo per aprire un link, ottenere informazioni o accedere a un servizio',
+          'C. Inserirlo come password per accedere al computer',
+          'D. Stamparlo per decorare un documento'
+        ],
+        correct:'A. Scansionarlo per aprire un link, ottenere informazioni o accedere a un servizio',
+        image:'www/download.png'
+      },
+      {
+        id:'Q049',
+        section:'ICONE',
+        text:'Qual è il “cervello principale” del computer?',
+        type:'single',
+        options:[,'LAN','RAM','CPU','ROM'],
+        correct:'CPU',
+        image:null
+      },
+      {
+        id: 'Q050',
+        section: 'COMPETENZE',
+        type: 'task',
+        text: 'Copia il testo mostrato qui sotto e incollalo nel campo di testo. Se non sei in grado di completare l’attività, puoi lasciare il campo vuoto oppure digitare "non lo so".',
+        taskKind: 'copypaste',
+        taskText: 'Digitalizzazione',
+        correct: 'Digitalizzazione',
+        skippable: true 
+      }
+
+    );
+
+    // ====== BLOCCO: FINALI (Likert) ======
+    Q.push(
+      {
+        id:'Q051',
+        section:'FINALE',
+        text:'Indica in che misura sei d’accordo con le seguenti affermazioni.',
+        type:'matrix',
+        rows:[
+          'Mi piace usare i dispositivi digitali.',
+          'Mi sento a mio agio nell’utilizzarli.',
+          'Sono disposto/a a imparare nuove funzioni dei dispositivi digitali.',
+          'Penso che i dispositivi digitali siano complicati da usare.',
+          'Mi sento in difficoltà quando altre persone parlano di tecnologia digitale.',
+          'Credo che sia importante per me imparare a usare meglio i dispositivi digitali.',
+          'Mi piacerebbe usare più spesso i dispositivi digitali nella vita quotidiana.',
+          'Penso che i dispositivi digitali possano rendere più semplici alcune attività (es. viaggiare, pagare bollette, cercare informazioni).',
+          'Credo che dovrebbero esistere più corsi o iniziative di formazione per aiutare persone della mia età a usare i dispositivi digitali.'
+        ],
+        columns:['Fortemente d’accordo','D’accordo','Indeciso','In disaccordo','Fortemente in disaccordo'],
+        image:null
+      }
+    );
+
+    /***********************
+     * STATO & NAVIGAZIONE
+     ***********************/
+    const state = {
+      index: 0,
+      answers: {}, // id -> value
+      history: [], // stack di indici visitati per "Indietro"
+    };
+
+   function visibleQuestions(){
+  const ans = state.answers;
+
+  function checkCondition(cond){
+    const v = ans[cond.id];
+
+    // equals → può essere singolo o array
+    if(cond.equals !== undefined){
+      if(Array.isArray(v)) return v.includes(cond.equals);
+      return v === cond.equals;
+    }
+
+    // includes → controlla che l'opzione sia contenuta nell'array
+    if(cond.includes !== undefined){
+      const vv = Array.isArray(v) ? v : [];
+      return vv.includes(cond.includes);
+    }
+
+    // inSelected → almeno uno dei valori specificati è presente
+    if(cond.inSelected !== undefined){
+      const vv = Array.isArray(v) ? v : [];
+      const needed = Array.isArray(cond.inSelected) ? cond.inSelected : [cond.inSelected];
+      return vv.some(x => needed.includes(x));
+    }
+
+    // showIfNotSelected → specifico valore NON selezionato
+    if(cond.notSelected !== undefined){
+      const vv = Array.isArray(v) ? v : [];
+      return !vv.includes(cond.notSelected);
+    }
+
+    return true; // se non ci sono campi riconosciuti, non blocca nulla
+  }
+
+  return Q.filter(q => {
+
+    // showIf (singolo oggetto condizione)
+    if(q.showIf && !checkCondition(q.showIf)) return false;
+
+    // showIfAny (array di condizioni, basta che una sia vera)
+    if(q.showIfAny && !q.showIfAny.some(checkCondition)) return false;
+
+    // showIfNotSelected (stile vecchio)
+    if(q.showIfNotSelected){
+      const v = ans[q.showIfNotSelected.id] || [];
+      if(Array.isArray(v) && v.includes(q.showIfNotSelected.value)) return false;
+    }
+
+    // inSelected (stile vecchio con {id, values:[]})
+    if(q.inSelected){
+      const v = ans[q.inSelected.id] || [];
+      const needed = q.inSelected.values || [];
+      if(!Array.isArray(v) || !needed.every(x => v.includes(x))) return false;
+    }
+
+    return true; // visibile se supera tutti i controlli
+  });
+}
+
+    function updateProgress(){
+      const V = visibleQuestions();
+      const pos = Math.min(state.index+1, V.length);
+      $('#progress').text(`Domanda ${pos} di ${V.length}`);
+      $('#backBtn').prop('disabled', state.history.length===0);
+    }
+
+    function renderCurrent(){
+      const V = visibleQuestions();
+      if(state.index>=V.length){
+        // Fine questionario
+        $('#q-wrap').html(`
+          <div class="question-title">Questionario completato! 🎉</div>
+          <p class="question-sub">Grazie per aver partecipato.</p>
+          <div class="notice">Le informazioni raccolte saranno utilizzate per migliorare l’esperienza digitale.</div>
+        `);
+        $('#nextBtn').addClass('hidden');
+        $('#backBtn').addClass('hidden');
+        updateProgress();
+        return;
+      }
+      const q = V[state.index];
+      if(q.type === 'welcome') {
+  $('#q-wrap').html(`
+    <div class="pill">${q.section}</div>
+    <div class="question-title">${q.text.replace(/\n/g, '<br>')}</div>
+    ${q.image ? `<div class="img-wrap"><img src="${q.image}" alt="Benvenuto" /></div>` : ''}
+  `);
+
+  // Nascondi il pulsante "Indietro"
+  $('#backBtn').addClass('hidden');
+
+  // Cambia il testo del pulsante "Avanti" in "Inizia"
+  $('#nextBtn').text(q.buttonText || 'Avanti');
+
+  $('#helper').text('');
+  updateProgress();
+  return;
+}
+      const name = $('#user-name').val().trim();
+      const imgHtml = q.image ? `<div class="img-wrap"><img id="question-image" src="${q.image}" alt="Immagine associata alla domanda"/></div>` : '';
+
+      let content = `<div class="pill">${q.section}</div><div class="question-title">${q.text}</div>${imgHtml}`;
+
+      const val = state.answers[q.id];
+      if(q.type === 'date') {
+        content += `<input type="date" id="answer" value="${val || ''}" style="padding:10px;border:1px solid #e5e7eb;border-radius:8px;width:100%;margin-top:6px"/>`;
+      }
+      if(q.type === 'dropdown'){
+  content += `<select id="answer" style="width:100%;padding:10px;border:1px solid #e5e7eb;border-radius:8px;margin-top:6px">
+      <option value="">Seleziona...</option>
+      ${q.options.map(op => `<option value="${op}" ${val===op?'selected':''}>${op}</option>`).join('')}
+    </select>`;
+      }
+      if(q.type === 'task' && q.taskKind === 'copypaste') {
+  content += `
+    <div class="task-box">
+      <div class="question-sub">Testo da copiare:</div>
+      <div style="padding:8px;background:#f3f4f6;border-radius:8px;margin-bottom:8px">
+        ${q.taskText}
+      </div>
+      <textarea id="taskAnswer" placeholder="Incolla qui..." 
+        style="width:100%;padding:10px;border:1px solid #e5e7eb;border-radius:8px"></textarea>
+    </div>
+  `;
+
+  setTimeout(()=>{
+    let pasted = false;
+    $('#taskAnswer').on('paste', () => { pasted = true; });
+    $('#taskAnswer').data('pasted-flag', () => pasted);
+  },0);
+}
+
+
+      if(q.type==='single'){
+        content += `<div class="options">` + q.options.map((op,i)=>{
+          const id=`${q.id}_opt_${i}`;
+          const checked = val===op ? 'checked' : '';
+          return `<label class="opt" for="${id}">
+              <input type="radio" id="${id}" name="${q.id}" value="${op}" ${checked} />
+              <span>${op}</span>
+            </label>`;
+        }).join('') + `</div>`;
+      }
+
+      if(q.type==='multi'){
+        content += `<div class="options">` + q.options.map((op,i)=>{
+          const id=`${q.id}_chk_${i}`;
+          const checked = Array.isArray(val) && val.includes(op) ? 'checked' : '';
+          return `<label class="opt" for="${id}">
+              <input type="checkbox" id="${id}" name="${q.id}" value="${op}" ${checked} />
+              <span>${op}</span>
+            </label>`;
+        }).join('') + `</div>`;
+        if(q.allowOther){
+          const otherVal = (Array.isArray(val) && val.find(v=>v.startsWith('Altro: '))) ? val.find(v=>v.startsWith('Altro: ')).replace('Altro: ','') : '';
+          content += `
+            <div class="opt">
+              <input type="checkbox" id="${q.id}_other_chk" ${otherVal ? 'checked':''} />
+              <label for="${q.id}_other_chk" style="flex:1">Altro (specificare)</label>
+            </div>
+            <input type="text" id="${q.id}_other_txt" placeholder="Specifica..." value="${otherVal||''}" style="width:100%;padding:10px;border:1px solid #e5e7eb;border-radius:8px;margin-top:6px"/>
+          `;
+        }
+      }
+      if(q.type==='matrix'){
+    content += `<div class="matrix-wrap">
+        <table class="matrix">
+            <thead>
+                <tr><th>Voce</th>` +
+                    q.columns.map(c=>`<th>${c}</th>`).join('') +
+                `</tr>
+            </thead>
+            <tbody>` +
+                q.rows.map((r,ri)=>{
+                    const rowOther = q.rowOther && r==='Altro (specificare)';
+                    let otherInput = '';
+                    const baseId=`${q.id}_r${ri}`;
+                    const rowVal = (val && val[r]) || null;
+                    if(rowOther){
+                        const otherTxt = (val && val.__otherText) || '';
+                        otherInput = `<div style="margin-top:6px">
+                            <input type="text" id="${q.id}_other" placeholder="Specifica..." value="${otherTxt}" 
+                            style="width:100%;padding:8px;border:1px solid #e5e7eb;border-radius:8px"/>
+                        </div>`;
+                    }
+                    return `<tr>
+                        <td style="text-align:left">${r}${rowOther?otherInput:''}</td>` +
+                        q.columns.map((c,ci)=>{
+                            const id=`${baseId}_c${ci}`;
+                            const checked = rowVal===c ? 'checked':'';
+                            return `<td>
+                                <input type="radio" name="${baseId}" id="${id}" value="${c}" ${checked} 
+                                aria-label="${r} - ${c}"/>
+                            </td>`;
+                        }).join('') +
+                    `</tr>`;
+                }).join('') +
+            `</tbody>
+        </table>
+    </div>
+    <div class="question-sub">Seleziona una risposta per ciascuna riga.</div>`;
+    }      
+      if(q.type==='matrixPerItem'){
+    const items = (state.answers[q.perItemSource] || []).slice();
+    content += `<div class="matrix-wrap">
+        <table class="matrix">
+            <thead>
+                <tr><th>Dispositivo</th>` +
+                    q.columns.map(c=>`<th>${c.label}</th>`).join('') +
+                `</tr>
+            </thead>
+            <tbody>` +
+                items.map((item,ri)=>{
+                    const base=`${q.id}_${ri}`;
+                    const rowVal = (val && val[item]) || {};
+                    return `<tr>
+                        <td style="text-align:left">${item}</td>` +
+                        q.columns.map((col,ci)=>{
+                            const name = `${base}_${col.key}`;
+                            const current = rowVal[col.key] || '';
+                            return `<td>
+                                <select id="${name}" style="width:100%;padding:8px;border:1px solid #e5e7eb;border-radius:8px">
+                                    <option value="">—</option>` +
+                                    col.choices.map(choice=>`<option value="${choice}" ${current===choice?'selected':''}>${choice}</option>`).join('') +
+                                `</select>
+                            </td>`;
+                        }).join('') +
+                    `</tr>`;
+                }).join('') +
+            `</tbody>
+        </table>
+    </div>
+    <div class="question-sub">Compila le colonne per ogni dispositivo selezionato.</div>`;
+   }
+      if(q.type==='ynList'){
+        content += `<div class="options">` + q.items.map((it,idx)=>{
+          const idBase = `${q.id}_${idx}`;
+          const current = (val && val[it]) || '';
+          return `<div class="grid-2">
+            <div class="opt" style="border:none;padding:0"><strong>${it}</strong></div>
+            <div class="opt" style="justify-content:space-between">
+              <label><input type="radio" name="${idBase}" value="Sì" ${current==='Sì'?'checked':''}/> Sì</label>
+              <label><input type="radio" name="${idBase}" value="No" ${current==='No'?'checked':''}/> No</label>
+            </div>
+          </div>`;
+        }).join('') + `</div>`;
+      }
+
+      if(q.type==='rank'){
+        const items = val && Array.isArray(val) ? val : q.rankItems.slice();
+        content += `
+          <div class="question-sub">Trascina per ordinare dall’alto (1 = più sicura) al basso (4 = meno sicura).</div>
+          <ul class="rank-list" id="${q.id}_rank">
+            ${items.map((it,i)=>`<li class="rank-item" draggable="true" data-val="${it}">${i+1}) ${it}</li>`).join('')}
+          </ul>
+        `;
+      }
+
+      $('#q-wrap').html(content);
+      attachRankDnD(q);
+      updateProgress();
+      $('#helper').text('');
+    }
+
+    function attachRankDnD(q){
+      if(q.type!=='rank') return;
+      const ul = document.getElementById(`${q.id}_rank`);
+      let draggingEl = null;
+
+      ul.querySelectorAll('.rank-item').forEach(li=>{
+        li.addEventListener('dragstart', e=>{
+          draggingEl = li;
+          li.classList.add('dragging');
+        });
+        li.addEventListener('dragend', e=>{
+          li.classList.remove('dragging');
+          // aggiorna numeri
+          Array.from(ul.children).forEach((el,idx)=>{ el.textContent = `${idx+1}) ${el.getAttribute('data-val')}`; });
+        });
+      });
+      ul.addEventListener('dragover', e=>{
+        e.preventDefault();
+        const afterElement = getDragAfterElement(ul, e.clientY);
+        if(afterElement==null){
+          ul.appendChild(draggingEl);
+        }else{
+          ul.insertBefore(draggingEl, afterElement);
+        }
+      });
+      function getDragAfterElement(container, y){
+        const els = [...container.querySelectorAll('.rank-item:not(.dragging)')];
+        return els.reduce((closest, child)=>{
+          const box = child.getBoundingClientRect();
+          const offset = y - box.top - box.height / 2;
+          if(offset < 0 && offset > closest.offset){
+            return {offset, element:child};
+          } else {
+            return closest;
+          }
+        }, {offset:Number.NEGATIVE_INFINITY}).element;
+      }
+    }
+
+    function readAnswer(q){
+      if(q.type === 'date') {
+        return document.getElementById('answer').value;  // restituisce tipo "YYYY-MM-DD"
+      }
+      if(q.type === 'dropdown'){
+  return document.getElementById('answer').value || null;
+      }
+      if(q.type==='single'){
+        const v = $(`input[name="${q.id}"]:checked`).val();
+        return v || null;
+      }
+      if(q.type==='multi'){
+        const arr = Array.from($(`input[name="${q.id}"]:checked`)).map(x=>x.value);
+        const otherChk = $(`#${q.id}_other_chk`).prop('checked');
+        const otherTxt = ($(`#${q.id}_other_txt`).val()||'').trim();
+        if(otherChk && otherTxt) arr.push('Altro: ' + otherTxt);
+        return arr.length ? arr : null;
+      }
+      if(q.type==='matrix'){
+        const result = {};
+        let complete = true;
+        q.rows.forEach((r,ri)=>{
+          // altrove
+          if(q.rowOther && r==='Altro (specificare)'){
+            const other = $(`#${q.id}_other`).val() || '';
+            if(other) result.__otherText = other;
+          }
+          const name = `${q.id}_r${ri}`;
+          const v = $(`input[name="${name}"]:checked`).val();
+          if(v) result[r] = v;
+          else complete = false;
+        });
+        return complete ? result : null;
+      }
+      if(q.type==='matrixPerItem'){
+        const items = (state.answers[q.perItemSource] || []);
+        const res = {};
+        let ok = true;
+        items.forEach((item,i)=>{
+          res[item] = {};
+          q.columns.forEach(col=>{
+            const val = $(`#${q.id}_${i}_${col.key}`).val();
+            if(!val) ok = false;
+            res[item][col.key] = val || '';
+          });
+        });
+        return ok ? res : null;
+      }
+     if(q.type === 'task' && q.taskKind === 'copypaste') {
+  const val = ($('#taskAnswer').val()||'').trim();
+  return val ? val : null;
+      }
+      if(q.type==='ynList'){
+        const res = {};
+        let ok = true;
+        q.items.forEach((it,idx)=>{
+          const name = `${q.id}_${idx}`;
+          const v = $(`input[name="${name}"]:checked`).val();
+          if(!v) ok = false;
+          res[it] = v || '';
+        });
+        return ok ? res : null;
+      }
+      if(q.type==='rank'){
+        const arr = Array.from(document.querySelectorAll(`#${q.id}_rank .rank-item`)).map(li=>li.getAttribute('data-val'));
+        return arr.length ? arr : null;
+      }
+      return null;
+    }
+
+    function isSkippable(q){
+      // se q è condizionato e la condizione non è soddisfatta, non viene nemmeno renderizzato (già filtrato)
+      return false;
+    }
+
+    function validateAndSave(){
+      const V = visibleQuestions();
+      const q = V[state.index];
+      // Salta la validazione per la pagina di benvenuto
+      if(q.type === 'welcome') return true;
+
+
+      // nome richiesto
+      const nome = ($('#user-name').val()||'').trim();
+      if(!nome){
+        $('#helper').text('Inserisci il tuo nome per continuare.');
+        $('#user-name').focus();
+        return false;
+      }
+
+      const ans = readAnswer(q);
+    state.answers[q.id] = ans;
+
+      // Salvataggio su Supabase (uno o più record a seconda del tipo)
+      const saveRows = [];
+
+      const basePayload = (domanda, risposta, correct=null) => {
+        // esito
+        let esito = 'n/a';
+        if(correct!==null){
+          if(Array.isArray(risposta)){
+            // in questo questionario non abbiamo multi con correct, ma gestiamo comunque
+            const ok = risposta.sort().join('||') === (Array.isArray(correct)?correct.sort().join('||'):String(correct));
+            esito = ok ? 'corretto' : 'sbagliato';
+          } else {
+            esito = (String(risposta) === String(correct)) ? 'corretto' : 'sbagliato';
+          }
+        }
+        return {
+          nome,
+          domanda,
+          risposta: (typeof risposta === 'string') ? risposta : JSON.stringify(risposta),
+          corretto: correct,
+          esito
+        };
+      };
+
+      if(q.type==='single'){
+        saveRows.push(basePayload(q.id, ans, q.correct ?? null));
+      }
+      if(q.type === 'date'){
+    if(!ans || isNaN(Date.parse(ans))){
+        $('#helper').text('Inserisci una data valida per continuare.');
+        return false;
+    }
+    saveRows.push(basePayload(q.id, ans, null));
+      }
+     // --- Controllo specifico per task copypaste ---
+    if(q.type === 'task' && q.taskKind === 'copypaste') {
+    let correctAnswer = null;
+    const ansVal = (ans || '').trim().toLowerCase();
+
+    // Se l'utente lascia vuoto o scrive "non lo so", può andare avanti
+    if(ansVal === '' || ansVal === 'non lo so') {
+        saveRows.push(basePayload(q.id, ans || '', correctAnswer));
+    } else {
+        const pasted = typeof $('#taskAnswer').data('pasted-flag') === 'function'
+            ? $('#taskAnswer').data('pasted-flag')()
+            : false;
+
+        if(!pasted) {
+            alert('Devi incollare (Ctrl+V) il testo, non scriverlo.');
+            return false;
+        }
+
+        if(ans.trim() !== q.correct.trim()) {
+            alert('Il testo incollato non è corretto. Riprova.');
+            return false;
+        }
+
+        correctAnswer = q.correct;
+        saveRows.push(basePayload(q.id, ans, correctAnswer));
+    }
+}
+      if(q.type==='multi'){
+        saveRows.push(basePayload(q.id, ans.join('; '), q.correct ?? null));
+      }
+      if(q.type === 'dropdown'){
+    if(!ans){
+        $('#helper').text('Seleziona un’opzione per continuare.');
+        return false;
+    }
+    saveRows.push(basePayload(q.id, ans, q.correct ?? null));
+    }
+      if(q.type==='matrix'){
+        // una riga per ciascuna voce
+        Object.entries(ans).forEach(([k,v])=>{
+          if(k==='__otherText') return;
+          const dom = `${q.id} - ${k}`;
+          saveRows.push(basePayload(dom, v, null));
+        });
+        if(ans.__otherText){
+          const dom = `${q.id} - Specifica (Altro)`;
+          saveRows.push(basePayload(dom, ans.__otherText, null));
+        }
+      }
+      if(q.type==='matrixPerItem'){
+        Object.entries(ans).forEach(([item,obj])=>{
+          Object.entries(obj).forEach(([colKey,val])=>{
+            const colLabel = (q.columns.find(c=>c.key===colKey)||{}).label || colKey;
+            const dom = `${q.id} - ${item} / ${colLabel}`;
+            saveRows.push(basePayload(dom, val, null));
+          });
+        });
+      }
+      if(q.type==='ynList'){
+        Object.entries(ans).forEach(([k,v])=>{
+          const dom = `${q.id} - ${k}`;
+          saveRows.push(basePayload(dom, v, null));
+        });
+      }
+      if(q.type==='rank'){
+        // salvo l’ordine come stringa numerata
+        const ordered = ans.map((x,i)=>`${i+1}) ${x}`).join(' | ');
+        // opzionale: calcolo "corretto" per la sicurezza? Non richiesto, quindi null.
+        saveRows.push(basePayload(q.id, ordered, null));
+      }
+
+      // invia in sequenza (per semplicità e compatibilità con la tua tabella)
+      (async ()=>{
+        for(const row of saveRows){
+          await salvaRispostaSupabase(row);
+        }
+      })();
+
+      return true;
+    }
+
+    $('#nextBtn').on('click', ()=>{
+      if(!validateAndSave()) return;
+      const V = visibleQuestions();
+      state.history.push(state.index);
+      state.index = Math.min(state.index+1, V.length);
+      // Ripristina testo e pulsante Indietro per le domande successive
+$('#nextBtn').text('Avanti');
+$('#backBtn').removeClass('hidden');
+      renderCurrent();
+    });
+
+    $('#backBtn').on('click', ()=>{
+      if(state.history.length>0){
+        state.index = state.history.pop();
+        renderCurrent();
+      }
+    });
+
+    // Salva automaticamente quando si cambia nome (utile per tracciamento iniziale, opzionale)
+    $('#user-name').on('blur', ()=>{
+      const nome=($('#user-name').val()||'').trim();
+      if(nome){
+        // opzionale: si potrebbe inviare un evento "inizio questionario"
+      }
+    });
+
+    // Avvio
+    $(document).ready(()=>{
+      renderCurrent();
+    });
+  </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
