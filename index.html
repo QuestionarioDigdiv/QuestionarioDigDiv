@@ -839,14 +839,105 @@ Q.unshift({
         taskText: 'Digitalizzazione',
         correct: 'Digitalizzazione',
         skippable: true 
-      }
-
+      },
+      {
+        id:'Q051',
+        section:'TEST',
+        text:'<p>Tramite il PC dell’ intervistatore crea una cartella sul desktop .</p><p>Giudizio sulle abilità dell’ intervistato nello svolgimento del test',
+        type:'single',
+        options:[,'1','2','3','4','5'],
+      },
+      {
+        id:'Q052',
+        
+        section:'TEST',
+        showIfAny:[
+          {id:'Q051', equals:'3'},
+          {id:'Q051', equals:'4'},
+          {id:'Q051', equals:'5'},
+        ],
+        text:'<p>Inserisci all’interno della cartella appena creata il file “test”.</p><p>Giudizio sulle abilità dell’ intervistato nello svolgimento del test',
+        type:'single',
+        options:['1','2','3','4','5'],
+      },
+      {
+        id:'Q053',
+        
+        section:'TEST',
+        showIfAny:[
+          {id:'Q052',  equals:'3'},
+          {id:'Q052',  equals:'4'},
+          {id:'Q052',  equals:'5'},
+        ],
+        text:'<p>Trasforma il file "test in formato .csv".</p><p>Giudizio sulle abilità dell’ intervistato nello svolgimento del test',
+        type:'single',
+        options:[,'1','2','3','4','5'],
+      },
+      {
+        id:'Q054',
+        section:'TEST',
+        text:'<p>Modifica la luminosità dello schermo .</p><p>Giudizio sulle abilità dell’ intervistato nello svolgimento del test',
+        type:'single',
+        options:[,'1','2','3','4','5'],
+      },
+      {
+        id:'Q055',
+        
+        section:'TEST',
+        showIfAny:[
+          {id:'Q054',  equals:'3'},
+          {id:'Q054',  equals:'4'},
+          {id:'Q054',  equals:'5'},
+        ],
+        text:'<p>Controlla le reti wi-fi che sono disponibili nelle vicinanze, cioè quelle in cui potresti collegarti.</p><p>Giudizio sulle abilità dell’ intervistato nello svolgimento del test',
+        type:'single',
+        options:[,'1','2','3','4','5'],
+      },
+      {
+        id:'Q056',
+        section:'TEST',
+        text:'<p>L’intervistato deve aprire il browser e cercare le previsioni meteo della sua città.</p><p>Giudizio sulle abilità dell’ intervistato nello svolgimento del test',
+        type:'single',
+        options:['1','2','3','4','5'],
+      },
+      {
+        id:'Q057',
+        
+        section:'TEST',
+        showIfAny:[
+          {id:'Q056',  equals:'3'},
+          {id:'Q056',  equals:'4'},
+          {id:'Q056',  equals:'5'},
+        ],
+        text:'<p>Aggiungi il sito visitato nella domanda precedente alla barra dei preferiti.</p><p>Giudizio sulle abilità dell’ intervistato nello svolgimento del test',
+        type:'single',
+        options:[,'1','2','3','4','5'],
+      },
+      {
+        id:'Q058',
+        section:'TEST',
+        text:'<p>Apri un file word , scrivi la parola "digitalizzazione" con carattere 24 e mettila in grasseto".</p><p>Giudizio sulle abilità dell’ intervistato nello svolgimento del test',
+        type:'single',
+        options:['1','2','3','4','5'],
+      },
+      {
+        id:'Q059',
+        section:'TEST',
+        showIfAny:[
+          {id:'Q058',  equals:'3'},
+          {id:'Q058',  equals:'4'},
+          {id:'Q058',  equals:'5'},
+        ],
+        text:'<p>Apri un foglio excel e inserisci una formula per calcolare la somma tra due numeri.</p><p>Giudizio sulle abilità dell’ intervistato nello svolgimento del test',
+        type:'single',
+        options:[,'1','2','3','4','5'],
+      },
     );
 
     // ====== BLOCCO: FINALI (Likert) ======
     Q.push(
       {
-        id:'Q051',
+        id:'Q060',
         section:'FINALE',
         text:'Indica in che misura sei d’accordo con le seguenti affermazioni.',
         type:'matrix',
@@ -922,7 +1013,7 @@ Q.unshift({
       const v = ans[q.showIfNotSelected.id] || [];
       if(Array.isArray(v) && v.includes(q.showIfNotSelected.value)) return false;
     }
-
+    
     // inSelected (stile vecchio con {id, values:[]})
     if(q.inSelected){
       const v = ans[q.inSelected.id] || [];
@@ -1419,11 +1510,3 @@ $('#backBtn').removeClass('hidden');
   </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
