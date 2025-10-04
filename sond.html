@@ -190,7 +190,7 @@
 Q.unshift({
   id: 'welcome_page',
   section: 'BENVENUTO',
-  text:'<p><strong>AAABenvenuto</strong></p><p>Questa intervista fa parte di una ricerca volta ad esplorare il rapporto con le tecnologie digitali da parte delle persone con almeno 50 anni di età. L’intento è quello di raccogliere informazioni utili per comprendere meglio le competenze digitali della popolazione in questa fascia d’età e favorire lo sviluppo di strumenti, servizi e percorsi formativi più inclusivi e accessibili.</p><p>Le risposte saranno raccolte in forma anonima e utilizzate esclusivamente per scopi di ricerca, ogni informazione fornita sarà preziosa per il successo dello studio.</p>',
+  text:'<p><strong>Benvenuto</strong></p><p>Questa intervista fa parte di una ricerca volta ad esplorare il rapporto con le tecnologie digitali da parte delle persone con almeno 50 anni di età. L’intento è quello di raccogliere informazioni utili per comprendere meglio le competenze digitali della popolazione in questa fascia d’età e favorire lo sviluppo di strumenti, servizi e percorsi formativi più inclusivi e accessibili.</p><p>Le risposte saranno raccolte in forma anonima e utilizzate esclusivamente per scopi di ricerca, ogni informazione fornita sarà preziosa per il successo dello studio.</p>',
   type: 'welcome',
   required: false,
   buttonText: 'Inizia' // testo del pulsante
@@ -271,7 +271,7 @@ Q.unshift({
       'Disoccupato/a',
       'Malato/a cronico/a o disabile',
       'Casalingo/a',
-      'Altro'
+      'Altro (benestante, che vive di rendita, studente, che fa volontariato)'
     ]
   },
   {
@@ -287,7 +287,6 @@ Q.unshift({
       'Mai sposato/a',
       'Divorziato/a',
       'Vedovo/a',
-      'Altro (benestante, che vive di rendita, studente, che fa volontariato)'
     ]
   }
 );
@@ -310,7 +309,7 @@ Q.unshift({
         section:'DISPOSITIVI',
         text:'Di cosa avresti bisogno per imparare a usare un dispositivo digitale? (Risposta multipla)',
         type:'multi',
-        options:['Avere un dispositivo personale','Pratica e dedizione','Interesse e iniziativa','Memoria e concentrazione','Non lo sa/Non risponde'],
+        options:['Avere un dispositivo personale','Pratica e dedizione','Interesse e iniziativa','Memoria e concentrazione','Non lo sa/Non vuole rispondere'],
         image:null
       },
       {
@@ -319,7 +318,7 @@ Q.unshift({
         section:'DISPOSITIVI',
         text:'Quali difficoltà incontri (o pensi potresti incontrare) nell’imparare a usare un dispositivo digitale? (Risposta multipla)',
         type:'multi',
-        options:['Difficoltà pratiche','Difficoltà di lettura e scrittura','Memoria e agilità mentale','Paura del dispositivo o timore di romperlo','Non lo sa/Non risponde'],
+        options:['Difficoltà pratiche','Difficoltà di lettura e scrittura','Memoria e agilità mentale','Paura del dispositivo o timore di romperlo','Non lo sa/Non vuole rispondere'],
         image:null
       },
       {
@@ -328,7 +327,7 @@ Q.unshift({
         section:'DISPOSITIVI',
         text:'Cosa pensi potrebbe aiutarti di più ad imparare a usare un dispositivo digitale? (Risposta multipla)',
         type:'multi',
-        options:['Avere più tempo per fare pratica','Ricevere spiegazioni semplici e chiare','Avere qualcuno che ti supporta e ti guida','Ripetere spesso le stesse operazioni fino a sentirti sicuro','Non lo sa/Non risponde'],
+        options:['Avere più tempo per fare pratica','Ricevere spiegazioni semplici e chiare','Avere qualcuno che ti supporta e ti guida','Ripetere spesso le stesse operazioni fino a sentirti sicuro','Non lo sa/Non vuole rispondere'],
         image:null
       },
       // Per ogni dispositivo selezionato chiediamo 3 sotto-domande (matrice ripetuta)
@@ -341,9 +340,9 @@ Q.unshift({
         type:'matrixPerItem',
         perItemSource:'Q008',
         columns:[
-          {key:'tempo', label:'Da quanto tempo lo utilizzi?', choices:['Meno di 1 anno','1-3 anni','3-5 anni','Più di 5 anni','Non lo sa/Non risponde']},
-          {key:'agio', label:'Quanto ti senti a tuo agio nell’utilizzarlo?', choices:['Per niente','Poco','Abbastanza','Molto','Completamente a mio agio','Non lo sa/Non risponde']},
-          {key:'frequenza', label:'Con quale frequenza lo usi?', choices:['Spesso','Occasionalmente','Mai','Non lo sa/Non risponde']}
+          {key:'tempo', label:'Da quanto tempo lo utilizzi?', choices:['Meno di 1 anno','1-3 anni','3-5 anni','Più di 5 anni','Non lo sa/Non vuole rispondere']},
+          {key:'agio', label:'Quanto ti senti a tuo agio nell’utilizzarlo?', choices:['Per niente','Poco','Abbastanza','Molto','Completamente a mio agio','Non lo sa/Non vuole rispondere']},
+          {key:'frequenza', label:'Con quale frequenza lo usi?', choices:['Spesso','Occasionalmente','Mai','Non lo sa/Non vuole rispondere']}
         ],
         image:null
       },
@@ -359,12 +358,12 @@ Q.unshift({
         type:'single',
         required: true,
         options: [
-        'IOS',
         'Windows',
+        'IOS',
         'Linux',
         'Altro',
         'Non lo so',
-        'Non lo sa/Non risponde'
+        'Non lo sa/Non vuole rispondere'
       ],
         image:null
       },
@@ -385,7 +384,7 @@ Q.unshift({
         'Mozilla Firefox',
         'Altro',
         'Non lo so',
-        'Non lo sa/Non risponde'
+        'Non lo sa/Non vuole rispondere'
       ],
         image:null
       },
@@ -398,7 +397,7 @@ Q.unshift({
         section:'DISPOSITIVI',
         text:' Quali app usi più frequentemente? (Risposta multipla)',
         type:'multi',
-        options:['Suite Office (Word, Excel, ecc.)','App per videoconferenze (Zoom, Teams, Meet, ecc.)','App per note e organizzazione (Evernote, Notion, ecc.)','App per gestione di progetti','Non lo sa/Non risponde'],
+        options:['Suite Office (Word, Excel, ecc.)','App per videoconferenze (Zoom, Teams, Meet, ecc.)','App per note e organizzazione (Evernote, Notion, ecc.)','App per gestione di progetti','Non lo sa/Non vuole rispondere'],
         allowOther:true,
         image:null
       },
@@ -408,7 +407,7 @@ Q.unshift({
         section:'DISPOSITIVI',
         text:' Quale programma della Suite Office utilizzi di più? (Scelta multipla)',
         type:'multi',
-        options:['Microsoft Word','Microsoft Excel','Microsoft PowerPoint','Microsoft OneNote','Non lo sa/Non risponde'],
+        options:['Microsoft Word','Microsoft Excel','Microsoft PowerPoint','Microsoft OneNote','Non lo sa/Non vuole rispondere'],
         allowOther:true,
         image:null
       },
@@ -426,7 +425,7 @@ Q.unshift({
         'Windows mobile',
         'Android',
         'Altro',
-        'Non lo so','Non lo sa/Non risponde']
+        'Non lo so','Non lo sa/Non vuole rispondere']
       },
       {
          id:'Q020',
@@ -443,7 +442,7 @@ Q.unshift({
         'Samsung Internet',
         'Mozilla Firefox',
         'Altro',
-        'Non lo so','Non lo sa/Non risponde']
+        'Non lo so','Non lo sa/Non vuole rispondere']
       },
       // Domande aggiuntive per Smartphone/Tablet
       {
@@ -460,7 +459,7 @@ Q.unshift({
         'Windows mobile',
         'Android',
         'Altro',
-        'Non lo so','Non lo sa/Non risponde']
+        'Non lo so','Non lo sa/Non vuole rispondere']
       },
       {
          id:'Q022',
@@ -477,7 +476,7 @@ Q.unshift({
         'Samsung Internet',
         'Mozilla Firefox',
         'Altro',
-        'Non lo so','Non lo sa/Non risponde']
+        'Non lo so','Non lo sa/Non vuole rispondere']
       },
       // Domande aggiuntive per Smart TV
       {
@@ -493,7 +492,7 @@ Q.unshift({
           'Piattaforme di streaming (Netflix, Prime Video, Disney+, ecc.)',
           'YouTube o simili',
           'Servizi on demand delle emittenti TV',
-          'Non lo sa/Non risponde'
+          'Non lo sa/Non vuole rispondere'
         ],
         allowOther:true,
         image:null
@@ -506,7 +505,7 @@ Q.unshift({
         section:'DISPOSITIVI',
         text:'(TV connessa a Internet) Quanto spesso utilizzi le funzioni “smart” della TV?',
         type:'single',
-        options:['Quasi sempre','Spesso','Occasionalmente','Raramente','Mai','Non lo sa/Non risponde'],
+        options:['Quasi sempre','Spesso','Occasionalmente','Raramente','Mai','Non lo sa/Non vuole rispondere'],
         image:null
       }
     );
@@ -518,7 +517,7 @@ Q.unshift({
         section:'INTERNET',
         text:'Tramite quale connessione accedi a Internet? (Scelta multipla)',
         type:'multi',
-        options:['Wi-Fi di casa','Rete mobile (4G/5G)','Wi-Fi pubblico','Non utilizzo Internet','Non lo sa/Non risponde'],
+        options:['Wi-Fi di casa','Rete mobile (4G/5G)','Wi-Fi pubblico','Non utilizzo Internet','Non lo sa/Non vuole rispondere'],
         image:null
       },
       // Se "Non utilizzo Internet" è selezionato, le sotto-domande internet si saltano.
@@ -528,7 +527,7 @@ Q.unshift({
         section:'INTERNET',
         text:'Negli ultimi 3 mesi hai utilizzato Internet per acquistare beni o servizi?',
         type:'single',
-        options:['Sì','No','Non lo sa/Non risponde'],
+        options:['Sì','No','Non lo sa/Non vuole rispondere'],
         image:null
       },
       {
@@ -555,7 +554,7 @@ Q.unshift({
         section:'INTERNET',
         text:'Negli ultimi 3 mesi hai utilizzato Internet per comunicare con altre persone?',
         type:'single',
-        options:['Sì','No','Non lo sa/Non risponde'],
+        options:['Sì','No','Non lo sa/Non vuole rispondere'],
         image:null
       },
       {
@@ -579,7 +578,7 @@ Q.unshift({
         section:'INTERNET',
         text:'Negli ultimi 3 mesi hai utilizzato Internet per informarti o cercare contenuti?',
         type:'single',
-        options:['Sì','No','Non lo sa/Non risponde'],
+        options:['Sì','No','Non lo sa/Non vuole rispondere'],
         image:null
       },
       {
@@ -606,7 +605,7 @@ Q.unshift({
         section:'INTERNET',
         text:'Negli ultimi 3 mesi hai utilizzato Internet per servizi pubblici?',
         type:'single',
-        options:['Sì','No','Non lo sa/Non risponde'],
+        options:['Sì','No','Non lo sa/Non vuole rispondere'],
         image:null
       },
       {
@@ -629,7 +628,7 @@ Q.unshift({
         section:'INTERNET',
         text:'Negli ultimi 3 mesi hai utilizzato Internet per la gestione del patrimonio o per condurre investimenti online?',
         type:'single',
-        options:['Sì','No','Non lo sa/Non risponde'],
+        options:['Sì','No','Non lo sa/Non vuole rispondere'],
         image:null
       },
       {
@@ -661,7 +660,7 @@ Q.unshift({
     section:'LAVORO',
     text:'Hai mai svolto attività lavorativa?',
     type:'single',
-    options:['Sì','No','Non lo sa/Non risponde'],
+    options:['Sì','No','Non lo sa/Non vuole rispondere'],
     image:null
   },
   {
@@ -714,7 +713,7 @@ Q.unshift({
         section:'SICUREZZA',
         text:'Solitamente prendi precauzioni per proteggere i tuoi dati online?',
         type:'single',
-        options:['Sì','No','Non lo sa/Non risponde'],
+        options:['Sì','No','Non lo sa/Non vuole rispondere'],
         image:null
       },
       {
@@ -742,7 +741,7 @@ Q.unshift({
           'Maria1970',
           'Tr*9kLm!28#q',
           '1234567',
-          'Non rispondo'
+          'Non lo sa/Non vuole rispondere'
         ],
         correct:'Tr*9kLm!28#q',
         image:null
@@ -761,7 +760,7 @@ Q.unshift({
           '2. Il sito è a pagamento',
           '3. La connessione tra il tuo dispositivo e il sito è sicura',
           '4. Il sito non funziona senza password',
-          '5. Non lo sa/Non risponde',
+          '5. Non lo sa/Non vuole rispondere',
         ],
         correct:'A. La connessione tra il tuo dispositivo e il sito è sicura',
         image:'www/lucchetto.jpg'
@@ -776,7 +775,7 @@ Q.unshift({
           '2. Spegnere il dispositivo',
           '3. Aggiornare un’applicazione',
           '4. Aprire il menu delle impostazioni',
-          '5. Non lo sa/Non risponde'
+          '5. Non lo sa/Non vuole rispondere'
         ],
         correct:'A. Aprire il menu delle impostazioni',
         image:'www/ingranaggio.jpg'
@@ -791,7 +790,7 @@ Q.unshift({
           '2. Rubrica dei contatti',
           '3. Lista degli appuntamenti',
           '4. Documenti salvati',
-          '5. Non lo sa/Non risponde',
+          '5. Non lo sa/Non vuole rispondere',
         ],
         correct:'A. Email o messaggi',
         image:'www/email.jpg'
@@ -806,7 +805,7 @@ Q.unshift({
           '2. È attiva la connessione Bluetooth',
           '3. Sei connesso a Internet tramite rete wireless',
           '4. Stai guardando un video online',
-          '5. Non lo sa/Non risponde',
+          '5. Non lo sa/Non vuole rispondere',
         ],
         correct:'A. Sei connesso a Internet tramite rete wireless',
         image:'www/wifi.png'
@@ -821,7 +820,7 @@ Q.unshift({
           '2. Navigare in Internet ad alta velocità',
           '3. Bloccare l’accesso al dispositivo',
           '4. Salvare file nella memoria interna',
-          '5. Non lo sa/Non risponde',
+          '5. Non lo sa/Non vuole rispondere',
         ],
         correct:'A. Collegare dispositivi senza fili (cuffie, casse, tastiere)',
         image:'www/blue.jpg'
@@ -836,7 +835,7 @@ Q.unshift({
           '2. Scansionarlo per aprire un link, ottenere informazioni o accedere a un servizio',
           '3. Inserirlo come password per accedere al computer',
           '4. Stamparlo per decorare un documento',
-          '5. Non lo sa/Non risponde',
+          '5. Non lo sa/Non vuole rispondere',
         ],
         correct:'A. Scansionarlo per aprire un link, ottenere informazioni o accedere a un servizio',
         image:'www/download.png'
@@ -1132,6 +1131,25 @@ Q.unshift({
           `;
         }
       }
+      if(q.id === 'Q008'){
+  setTimeout(()=>{
+    const $checks = $(`input[name="Q008"]`);
+    const $nessuno = $checks.filter('[value="Nessuna proprietà o accesso a dispositivi connessi a Internet"]');
+
+    $checks.on('change', function(){
+      if($nessuno.is(':checked')){
+        $checks.not($nessuno).prop('checked', false).prop('disabled', true);
+      } else {
+        $checks.not($nessuno).prop('disabled', false);
+      }
+    });
+
+    // attiva subito lo stato corretto se ricarichi
+    if($nessuno.is(':checked')){
+      $checks.not($nessuno).prop('checked', false).prop('disabled', true);
+    }
+  },0);
+}
       if(q.type==='matrix'){
     content += `<div class="matrix-wrap">
         <table class="matrix">
