@@ -261,6 +261,27 @@ Q.unshift({
   },
   {
     id: 'Q006',
+section: 'Formazione post-secondaria e professionale',
+text: 'Quale fra le seguenti istituzioni post-secondarie o professionali ha frequentato, conseguendone il titolo?',
+type: 'single',
+required: true,
+options: [
+  'Nessuna',
+  'Qualche anno di educazione post-secondaria (ma nessun titolo conseguito)',
+  'Scuole di formazione paramediche',
+  'Scuole di formazione professionale post-maturità (inclusi assistenti sociali)',
+  'ISEF, accademie artistiche o conservatorio',
+  'Laurea breve, diploma universitario, scuole dirette a fini speciali',
+  'Laurea triennale',
+  'Laurea specialistica, laurea magistrale',
+  'Università post-laurea: scuole di specializzazione, corsi di perfezionamento',
+  'Dottorato di ricerca',
+  'Frequenta attualmente un\'istituzione post-secondaria o professionale',
+  'Altra istituzione post-secondaria o professionale'
+]
+  },
+  {
+    id: 'Q007',
     section: 'Informazione sociodemografiche',
     text: 'Quale delle seguenti categorie descrive meglio la sua attuale situazione lavorativa?',
     type: 'single',
@@ -275,7 +296,7 @@ Q.unshift({
     ]
   },
   {
-    id: 'Q007',
+    id: 'Q008',
     section: 'SOCIODemografico',
     text: 'Qual è il suo stato civile?\n(La risposta "mai sposato" comprende anche celibe e nubile.)',
     type: 'single',
@@ -287,407 +308,433 @@ Q.unshift({
       'Mai sposato/a',
       'Divorziato/a',
       'Vedovo/a',
+      'Altro'
     ]
   }
 );
 
     // ====== BLOCCO: DISPOSITIVI ======
     Q.push(
-       {
-        id:'Q008',
-        section:'DISPOSITIVI',
-        text:'A quali di questi dispositivi ha accesso, sia perché li possiede Lei stesso o perché può accedervi nel Suo ambiente o contesto sociale?',
-        type:'multi',
-        options:['Computer fisso','Computer portatile','Tablet','Smartphone o cellulare connesso a internet','Smartwatch','Lettore e-book','TV connessa a internet','Nessuna proprietà o accesso a dispositivi connessi a Internet'],
-        allowOther:true,
-        image:null
-      },
-      // --- ramo NO
-      {
-        id:'Q009',
-        showIf:{id:'Q008', equals:'Nessuna proprietà o accesso a dispositivi connessi a Internet'},
-        section:'DISPOSITIVI',
-        text:'Di cosa avresti bisogno per imparare a usare un dispositivo digitale? (Risposta multipla)',
-        type:'multi',
-        options:['Avere un dispositivo personale','Pratica e dedizione','Interesse e iniziativa','Memoria e concentrazione','Non lo sa/Non vuole rispondere'],
-        image:null
-      },
-      {
-        id:'Q010',
-        showIf:{id:'Q008', equals:'Nessuna proprietà o accesso a dispositivi connessi a Internet'},
-        section:'DISPOSITIVI',
-        text:'Quali difficoltà incontri (o pensi potresti incontrare) nell’imparare a usare un dispositivo digitale? (Risposta multipla)',
-        type:'multi',
-        options:['Difficoltà pratiche','Difficoltà di lettura e scrittura','Memoria e agilità mentale','Paura del dispositivo o timore di romperlo','Non lo sa/Non vuole rispondere'],
-        image:null
-      },
-      {
-        id:'Q011',
-        showIf:{id:'Q008', equals:'Nessuna proprietà o accesso a dispositivi connessi a Internet'},
-        section:'DISPOSITIVI',
-        text:'Cosa pensi potrebbe aiutarti di più ad imparare a usare un dispositivo digitale? (Risposta multipla)',
-        type:'multi',
-        options:['Avere più tempo per fare pratica','Ricevere spiegazioni semplici e chiare','Avere qualcuno che ti supporta e ti guida','Ripetere spesso le stesse operazioni fino a sentirti sicuro','Non lo sa/Non vuole rispondere'],
-        image:null
-      },
-      // Per ogni dispositivo selezionato chiediamo 3 sotto-domande (matrice ripetuta)
-      {
-        id:'Q012_Q013_Q014',
-        showIf:{id:'Q008', inSelected:['Computer fisso','Computer portatile','Tablet','Smartphone o cellulare connesso a internet','Smartwatch','Lettore e-book','TV connessa a internet','Altri dispositivi connessi a Internet (specificare)'
-        ]},
-        section:'DISPOSITIVI',
-        text:'Per ciascun dispositivo selezionato, rispondi:',
-        type:'matrixPerItem',
-        perItemSource:'Q008',
-        columns:[
-          {key:'tempo', label:'Da quanto tempo lo utilizzi?', choices:['Meno di 1 anno','1-3 anni','3-5 anni','Più di 5 anni','Non lo sa/Non vuole rispondere']},
-          {key:'agio', label:'Quanto ti senti a tuo agio nell’utilizzarlo?', choices:['Per niente','Poco','Abbastanza','Molto','Completamente a mio agio','Non lo sa/Non vuole rispondere']},
-          {key:'frequenza', label:'Con quale frequenza lo usi?', choices:['Spesso','Occasionalmente','Mai','Non lo sa/Non vuole rispondere']}
-        ],
-        image:null
-      },
-      // Domande aggiuntive per Computer
-      {
-        id:'Q015',
-         showIfAny:[
-          {id:'Q008', includes:'Computer fisso'},
-          {id:'Q008', includes:'Computer portatitle'},
-      ],
-        section:'DISPOSITIVI',
-        text:'Quale sistema operativo possiede il tuo computer',
-        type:'single',
-        required: true,
-        options: [
-        'Windows',
-        'IOS',
-        'Linux',
-        'Altro',
-        'Non lo so',
-        'Non lo sa/Non vuole rispondere'
-      ],
-        image:null
-      },
-      {
-        id:'Q016',
-        showIfAny:[
-          {id:'Q008', includes:'Computer fisso'},
-          {id:'Q008', includes:'Computer portatitle'},
-      ],
-        section:'DISPOSITIVI',
-        text:'Quale browser (sistema di ricerca) utilizzi sul tuo computer?',
-        type:'multi',
-        required: true,
-        options: [
-        'Google Chrome',
-        'Safari',
-        'Microsoft Edge',
-        'Mozilla Firefox',
-        'Altro',
-        'Non lo so',
-        'Non lo sa/Non vuole rispondere'
-      ],
-        image:null
-      },
-      {
-        id:'Q017',
-         showIfAny:[
-          {id:'Q008', includes:'Computer fisso'},
-          {id:'Q008', includes:'Computer portatitle'},
-      ],
-        section:'DISPOSITIVI',
-        text:' Quali app usi più frequentemente? (Risposta multipla)',
-        type:'multi',
-        options:['Suite Office (Word, Excel, ecc.)','App per videoconferenze (Zoom, Teams, Meet, ecc.)','App per note e organizzazione (Evernote, Notion, ecc.)','App per gestione di progetti','Non lo sa/Non vuole rispondere'],
-        allowOther:true,
-        image:null
-      },
-      {
-        id:'Q018',
-        showIf:{id:'Q018', includes:'Suite Office (Word, Excel, ecc.)'},
-        section:'DISPOSITIVI',
-        text:' Quale programma della Suite Office utilizzi di più? (Scelta multipla)',
-        type:'multi',
-        options:['Microsoft Word','Microsoft Excel','Microsoft PowerPoint','Microsoft OneNote','Non lo sa/Non vuole rispondere'],
-        allowOther:true,
-        image:null
-      },
+  {
+    id:'Q009',
+    section:'DISPOSITIVI',
+    text:'Quali di questi dispositivi possiede o ha a disposizione presso la Sua abitazione?',
+    type:'multi',
+    options:[
+      'Computer fisso',
+      'Computer portatile',
+      'Tablet',
+      'Smartphone (con touchscreen/schermo sensibile al tocco)',
+      'Cellulare (con tastiera fisica)',
+      'Smartwatch',
+      'Lettore e-book',
+      'TV',
+      'Nessuno di questi',
+    ],
+    allowOther:true,
+    image:null
+  },
+  // --- ramo NO
+  {
+    id:'Q010',
+    showIf:{id:'Q009', equals:'Nessuno di questi'},
+    section:'DISPOSITIVI',
+    text:'Di cosa avresti bisogno per imparare a usare un dispositivo digitale? (Risposta multipla)',
+    type:'multi',
+    options:[
+      'Avere un dispositivo personale',
+      'Pratica e dedizione',
+      'Interesse e iniziativa',
+      'Memoria e concentrazione',
+      'Non lo sa/Non vuole rispondere'
+    ],
+    image:null
+  },
+  {
+    id:'Q011',
+    showIf:{id:'Q009', equals:'Nessuno di questi'},
+    section:'DISPOSITIVI',
+    text:'Quali difficoltà incontri (o pensi potresti incontrare) nell’imparare a usare un dispositivo digitale? (Risposta multipla)',
+    type:'multi',
+    options:[
+      'Difficoltà pratiche',
+      'Difficoltà di lettura e scrittura',
+      'Memoria e agilità mentale',
+      'Paura del dispositivo o timore di romperlo',
+      'Non lo sa/Non vuole rispondere'
+    ],
+    image:null
+  },
+  {
+    id:'Q012',
+    showIf:{id:'Q009', equals:'Nessuno di questi'},
+    section:'DISPOSITIVI',
+    text:'Cosa pensi potrebbe aiutarti di più ad imparare a usare un dispositivo digitale? (Risposta multipla)',
+    type:'multi',
+    options:[
+      'Avere più tempo per fare pratica',
+      'Ricevere spiegazioni semplici e chiare',
+      'Avere qualcuno che ti supporta e ti guida',
+      'Ripetere spesso le stesse operazioni fino a sentirti sicuro',
+      'Non lo sa/Non vuole rispondere'
+    ],
+    image:null
+  },
+  // Loop per ogni dispositivo selezionato
+  {
+  id:'Q013_Q014_Q015_Q016',
+  section:'DISPOSITIVI',
+  text:'Per ciascun dispositivo selezionato, rispondi:',
+  type:'matrixPerItem',
+  perItemSource:'Q009',
+  columns:[
     {
-      id:'Q019',
-       showIfAny:[
-          {id:'Q008', includes:'Tablet'},
-        ],
-        section:'DISPOSITIVI',
-        text:'Quale sistema operativo utilizza il tuo Tablet ',
-        type:'single',
-        required: true,
-        options: [
-        'IOS',
-        'Windows mobile',
-        'Android',
-        'Altro',
-        'Non lo so','Non lo sa/Non vuole rispondere']
-      },
-      {
-         id:'Q020',
-       showIfAny:[
-          {id:'Q008', includes:'Tablet'},
-        ],
-        section:'DISPOSITIVI',
-        text:'Quale browser (sistema di ricerca) utilizzi sul tuo Tablet?',
-        type:'multi',
-        required: true,
-        options: [
-        'Google Chrome',
-        'Safari',
-        'Samsung Internet',
-        'Mozilla Firefox',
-        'Altro',
-        'Non lo so','Non lo sa/Non vuole rispondere']
-      },
-      // Domande aggiuntive per Smartphone/Tablet
-      {
-         id:'Q021',
-       showIfAny:[
-          {id:'Q008', includes:'Smartphone o cellulare connesso a internet'},       
-        ],
-        section:'DISPOSITIVI',
-        text:'Quale sistema operativo utilizza il tuo Smartphone ',
-        type:'single',
-        required: true,
-        options: [
-        'IOS',
-        'Windows mobile',
-        'Android',
-        'Altro',
-        'Non lo so','Non lo sa/Non vuole rispondere']
-      },
-      {
-         id:'Q022',
-       showIfAny:[
-          {id:'Q008', includes:'Smartphone o cellulare connesso a internet'},
-        ],
-        section:'DISPOSITIVI',
-        text:'Quale browser (sistema di ricerca) utilizzi sul tuo Smartphone?',
-        type:'multi',
-        required: true,
-        options: [
-        'Google Chrome',
-        'Safari',
-        'Samsung Internet',
-        'Mozilla Firefox',
-        'Altro',
-        'Non lo so','Non lo sa/Non vuole rispondere']
-      },
-      // Domande aggiuntive per Smart TV
-      {
-        id:'Q023',
-         showIfAny:[
-          {id:'Q008', includes:'TV connessa a internet'},
-        ],
-        section:'DISPOSITIVI',
-        text:'(TV connessa a Internet)Cosa guardi principalmente? (Risposta multipla)',
-        type:'multi',
-        options:[
-          'Canali televisivi tradizionali',
-          'Piattaforme di streaming (Netflix, Prime Video, Disney+, ecc.)',
-          'YouTube o simili',
-          'Servizi on demand delle emittenti TV',
-          'Non lo sa/Non vuole rispondere'
-        ],
-        allowOther:true,
-        image:null
-      },
-      {
-        id:'Q024',
-         showIfAny:[
-          {id:'Q008', includes:'TV connessa a internet'},
-        ],
-        section:'DISPOSITIVI',
-        text:'(TV connessa a Internet) Quanto spesso utilizzi le funzioni “smart” della TV?',
-        type:'single',
-        options:['Quasi sempre','Spesso','Occasionalmente','Raramente','Mai','Non lo sa/Non vuole rispondere'],
-        image:null
-      }
-    );
-
+      key:'connessione',
+      label:'È connesso a Internet?',
+      choices:['Sì','No','Non lo sa/Non vuole rispondere'],
+      required:true
+    },
+    {
+      key:'tempo',
+      label:'Da quanto tempo lo utilizzi?',
+      choices:['Meno di 1 anno','Meno di 2 anni','Meno di 3 anni','Meno di 4 anni','4 anni o più','Non lo sa/Non vuole rispondere']
+    },
+    {
+      key:'abilità',
+      label:'Come valuteresti la tua abilità nel suo utilizzo?',
+      choices:['Ottima','Molto buona','Buona','Discreta','Debole','Non lo sa/Non vuole rispondere']
+    },
+    {
+      key:'frequenza',
+      label:'Con quale frequenza lo usi?',
+      choices:['Ogni giorno o quasi ogni giorno','Almeno una volta alla settimana (ma non ogni giorno)','Almeno una volta al mese (ma non ogni settimana)','Almeno una volta ogni 3 mesi (ma non ogni mese)','Meno di una volta ogni 3 mesi','Mai','Non lo sa/Non vuole rispondere']
+    }
+  ],
+  image:null
+},
+  // Computer
+  {
+    id:'Q017',
+    showIfAny:[
+      {id:'Q009', includes:'Computer fisso'},
+      {id:'Q009', includes:'Computer portatile'}
+    ],
+    section:'DISPOSITIVI',
+    text:'Quale sistema operativo possiede il tuo computer?',
+    type:'single',
+    required:true,
+    options:['Windows','IOS','Linux','Altro (specificare)','Non lo sa/Non vuole rispondere'],
+    image:null
+  },
+  {
+    id:'Q018',
+    showIfAny:[
+      {id:'Q009', includes:'Computer fisso'},
+      {id:'Q009', includes:'Computer portatile'}
+    ],
+    section:'DISPOSITIVI',
+    text:'Quali browser utilizzi sul tuo computer? (Risposta multipla)',
+    type:'multi',
+    options:['Google Chrome','Safari','Microsoft Edge','Mozilla Firefox','Altro (specificare)','Non lo sa/Non vuole rispondere'],
+    image:null
+  },
+  {
+    id:'Q019',
+    showIfAny:[
+      {id:'Q009', includes:'Computer fisso'},
+      {id:'Q009', includes:'Computer portatile'}
+    ],
+    section:'DISPOSITIVI',
+    text:'Quali software o applicazioni usi più frequentemente sul computer? (Risposta multipla)',
+    type:'multi',
+    options:[
+      'Suite Office (Word, Excel, ecc.)',
+      'Applicazioni per videoconferenze (Zoom, Teams, Meet, ecc.)',
+      'Applicazioni per note e organizzazione (Evernote, Notion, ecc.)',
+      'Software aziendali o gestionali',
+      'Software di intelligenza artificiale (Chat GPT, Copilot, ecc.)',
+      'Altro (specificare)',
+      'Non lo sa/Non vuole rispondere'
+    ],
+    allowOther:true,
+    image:null
+  },
+  {
+    id:'Q020',
+    showIf:{id:'Q019', includes:'Suite Office (Word, Excel, ecc.)'},
+    section:'DISPOSITIVI',
+    text:'Quale programma della Suite Office utilizzi di più? (Risposta multipla)',
+    type:'multi',
+    options:['Microsoft Word','Microsoft Excel','Microsoft PowerPoint','Microsoft OneNote','Altro (specificare)','Non lo sa/Non vuole rispondere'],
+    allowOther:true,
+    image:null
+  },
+  // Tablet
+  {
+    id:'Q021',
+    showIfAny:[
+      {id:'Q009', includes:'Tablet'}
+    ],
+    section:'DISPOSITIVI',
+    text:'Quale sistema operativo possiede il tuo Tablet?',
+    type:'single',
+    options:['Android','IOS','Windows Mobile','Altro (specificare)','Non lo sa/Non vuole rispondere'],
+    image:null
+  },
+  {
+    id:'Q022',
+    showIfAny:[
+      {id:'Q009', includes:'Tablet'}
+    ],
+    section:'DISPOSITIVI',
+    text:'Quali browser utilizzi sul tuo Tablet? (Risposta multipla)',
+    type:'multi',
+    options:['Google Chrome','Safari','Samsung Internet','Mozilla Firefox','Altro (specificare)','Non lo sa/Non vuole rispondere'],
+    image:null
+  },
+  // Smartphone
+  {
+    id:'Q023',
+    showIfAny:[
+      {id:'Q009', includes:'Smartphone (con touchscreen/schermo sensibile al tocco)'}
+    ],
+    section:'DISPOSITIVI',
+    text:'Quale sistema operativo possiede il tuo Smartphone?',
+    type:'single',
+    options:['Android','IOS','Windows Mobile','Altro (specificare)','Non lo sa/Non vuole rispondere'],
+    image:null
+  },
+  {
+    id:'Q024',
+    showIfAny:[
+      {id:'Q009', includes:'Smartphone (con touchscreen/schermo sensibile al tocco)'}
+    ],
+    section:'DISPOSITIVI',
+    text:'Quali browser utilizzi sul tuo Smartphone? (Risposta multipla)',
+    type:'multi',
+    options:['Google Chrome','Safari','Samsung Internet','Mozilla Firefox','Altro (specificare)','Non lo sa/Non vuole rispondere'],
+    image:null
+  },
+  // TV
+  {
+    id:'Q025',
+    showIfAny:[
+      {id:'Q009', includes:'TV'}
+    ],
+    section:'DISPOSITIVI',
+    text:'Come utilizzi la TV principalmente? (Risposta multipla)',
+    type:'multi',
+    options:[
+      'Canali televisivi tradizionali',
+      'Piattaforme di streaming (Netflix, Prime Video, Disney+, ecc.)',
+      'YouTube o simili',
+      'Servizi on demand delle emittenti TV',
+      'Videogiochi',
+      'Altro (specificare)',
+      'Non lo sa/Non vuole rispondere'
+    ],
+    allowOther:true,
+    image:null
+  },
+  {
+    id:'Q026',
+    showIfAny:[
+      {id:'Q009', includes:'TV'}
+    ],
+    section:'DISPOSITIVI',
+    text:'Quanto spesso utilizzi le funzioni “smart” della TV?',
+    type:'single',
+    options:[
+      'Ogni giorno o quasi ogni giorno',
+      'Almeno una volta alla settimana (ma non ogni giorno)',
+      'Almeno una volta al mese (ma non ogni settimana)',
+      'Almeno una volta ogni 3 mesi (ma non ogni mese)',
+      'Meno di una volta ogni 3 mesi',
+      'Mai',
+      'Non lo sa/Non vuole rispondere'
+    ],
+    image:null
+  }
+);
     // ====== BLOCCO: INTERNET ======
-    Q.push(
-      {
-        id:'Q025',
-        section:'INTERNET',
-        text:'Tramite quale connessione accedi a Internet? (Scelta multipla)',
-        type:'multi',
-        options:['Wi-Fi di casa','Rete mobile (4G/5G)','Wi-Fi pubblico','Non utilizzo Internet','Non lo sa/Non vuole rispondere'],
-        image:null
-      },
-      // Se "Non utilizzo Internet" è selezionato, le sotto-domande internet si saltano.
-      {
-        id:'Q026',
-        showIfNotSelected:{id:'Q025', value:'Non utilizzo Internet'},
-        section:'INTERNET',
-        text:'Negli ultimi 3 mesi hai utilizzato Internet per acquistare beni o servizi?',
-        type:'single',
-        options:['Sì','No','Non lo sa/Non vuole rispondere'],
-        image:null
-      },
-      {
-        id:'Q027',
-        showIf:{id:'Q026', equals:'Sì'},
-        section:'INTERNET',
-        text:'Con che frequenza usi internet per le seguenti attività?',
-        type:'matrix',
-        rows:[
-          'Acquistare articoli fisici (abbigliamento, elettronica, libri, ecc.)',
-          'Ordinare generi alimentari o fare la spesa online',
-          'Prenotare viaggi, biglietti o alloggi',
-          'Pagare bollette o tasse online',
-          'Ottenere coupon o sconti digitali',
-          'Comprare o vendere su marketplace (Amazon, eBay, Zalando)',
-          'Comprare o vendere su siti di annunci (Subito.it, Vinted)'
-        ],
-        columns:['Mai','Raramente','Alcune volte','Spesso','Giornalmente'],
-        image:null
-      },
-      {
-        id:'Q028',
-        showIfNotSelected:{id:'Q025', value:'Non utilizzo Internet'},
-        section:'INTERNET',
-        text:'Negli ultimi 3 mesi hai utilizzato Internet per comunicare con altre persone?',
-        type:'single',
-        options:['Sì','No','Non lo sa/Non vuole rispondere'],
-        image:null
-      },
-      {
-        id:'Q029',
-        showIf:{id:'Q028', equals:'Sì'},
-        section:'INTERNET',
-        text:' Con quale frequenza svolgi le seguenti attività online per comunicare con altre persone ? ',
-        type:'matrix',
-        rows:[
-          'Inviare o leggere e-mail',
-          'Fare videochiamate (Meet,Zoom, Facetime, WhatsApp video)',
-          'Chattare su servizi di messaggistica istantanea (WhatsApp, Telegram, Messenger)',
-          'Usare social network per comunicare (Facebook, Instagram, LinkedIn)'
-        ],
-        columns:['Mai','Raramente','Alcune volte','Spesso','Giornalmente'],
-        image:null
-      },
-      {
-        id:'Q030',
-        showIfNotSelected:{id:'Q025', value:'Non utilizzo Internet'},
-        section:'INTERNET',
-        text:'Negli ultimi 3 mesi hai utilizzato Internet per informarti o cercare contenuti?',
-        type:'single',
-        options:['Sì','No','Non lo sa/Non vuole rispondere'],
-        image:null
-      },
-      {
-        id:'Q031',
-        showIf:{id:'Q030', equals:'Sì'},
-        section:'INTERNET',
-        text:'Con quale frequenza cerchi i seguenti contenuti?',
-        type:'matrix',
-        rows:[
-          'Leggere notizie o articoli di attualità',
-          'Cercare informazioni su salute e assistenza sanitaria',
-          'Guardare film, programmi TV o video in streaming',
-          'Fare ricerche su Wikipedia o siti simili',
-          'Cercare informazioni su hobby o interessi personali (ricette, giardinaggio, bricolage, ecc.)',
-          'Cercare indicazioni stradali o mappe',
-          'Seguire i mercati finanziari'
-        ],
-        columns:['Mai','Raramente','Alcune volte','Spesso','Giornalmente'],
-        image:null
-      },
-      {
-        id:'Q032',
-        showIfNotSelected:{id:'Q025', value:'Non utilizzo Internet'},
-        section:'INTERNET',
-        text:'Negli ultimi 3 mesi hai utilizzato Internet per servizi pubblici?',
-        type:'single',
-        options:['Sì','No','Non lo sa/Non vuole rispondere'],
-        image:null
-      },
-      {
-        id:'Q033',
-        showIf:{id:'Q032', equals:'Sì'},
-        section:'INTERNET',
-        text:'Con quale frequenza svolgi le seguenti operazioni?',
-        type:'matrix',
-        rows:[
-          'Prenotare visite mediche online',
-          'Accedere a servizi pubblici digitali (SPID, CIE, Fascicolo Sanitario, Agenzia delle Entrate, INPS)',
-          'altro'
-        ],
-        columns:['Mai','Raramente','Alcune volte','Spesso','Giornalmente'],
-        image:null
-      },
-      {
-        id:'Q034',
-        showIfNotSelected:{id:'Q025', value:'Non utilizzo Internet'},
-        section:'INTERNET',
-        text:'Negli ultimi 3 mesi hai utilizzato Internet per la gestione del patrimonio o per condurre investimenti online?',
-        type:'single',
-        options:['Sì','No','Non lo sa/Non vuole rispondere'],
-        image:null
-      },
-      {
-        id:'Q035',
-        showIf:{id:'Q034', equals:'Sì'},
-        section:'INTERNET',
-        text:'Indica con che frequenza svolgi le seguenti operazioni.',
-        type:'matrix',
-        rows:[
-          'Accedi al tuo conto online per controllare il saldo',
-          'Utilizzi app per monitorare le tue spese personali',
-          'Usi lo smartphone per effettuare bonifici o pagamenti',
-          'Controlli o ricevi notifiche sull’andamento dei mercati azionari tramite app o siti',
-          'Effettui operazioni di acquisto o vendita di azioni'
-        ],
-        columns:['Mai','Raramente','Alcune volte','Spesso','Giornalmente'],
-        image:null
-      },
-    );
-    // ====== BLOCCO: LAVORO ======
-    Q.push(
+  Q.push(
+  // Condizione C7: se Q013 = "Sì"
+{
+  id:'Q013_flagConnessione',
+  type:'calculated',
+  expression:"Object.values(answers['Q013_Q014_Q015_Q016'] || {}).some(o => o.connessione === 'Sì')"
+},
+{
+  id:'Q027',
+  section:'INTERNET',
+  showIf:{ id:'Q013_flagConnessione', equals:true },
+  text:'Tramite quale connessione accedi a Internet? (Scelta multipla)',
+  type:'multi',
+  options:['Wi‑Fi di casa','Rete mobile (4G/5G)','Wi‑Fi pubblico','Non lo sa/Non vuole rispondere'],
+  required:true,
+  image:null
+},
+// Condizione C8: se Q028 = "Sì"
+  {
+    id:'Q028',
+    showIf:{id:'Q027', notEquals:'Non lo sa/Non vuole rispondere'},
+    section:'INTERNET',
+    text:'Negli ultimi 3 mesi hai utilizzato Internet per acquistare beni o servizi?',
+    type:'single',
+    options:['Sì','No','Non lo sa/Non vuole rispondere'],
+    image:null
+  },
+  {
+    id:'Q029',
+    showIf:{id:'Q028', equals:'Sì'},
+    section:'INTERNET',
+    text:'Con che frequenza usi Internet per le seguenti attività?',
+    type:'matrix',
+    rows:[
+      'Acquistare articoli fisici (abbigliamento, elettronica, libri, ecc.)',
+      'Ordinare generi alimentari o fare la spesa online',
+      'Prenotare viaggi, biglietti o alloggi',
+      'Pagare bollette o tasse online',
+      'Ottenere coupon o sconti digitali',
+      'Comprare o vendere su marketplace (Amazon, eBay, Zalando)',
+      'Comprare o vendere su siti di annunci (Subito.it, Vinted)'
+    ],
+    columns:['Mai','Meno di una volta ogni 3 mesi','Almeno una volta ogni 3 mesi','Almeno una volta al mese','Almeno una volta alla settimana','Ogni giorno o quasi ogni giorno'],
+    image:null
+  },
+  // Condizione C9: se Q030 = "Sì"
+ {
+  id:'Q030',
+  section:'INTERNET',
+  text:'Negli ultimi 3 mesi hai utilizzato Internet per comunicare con altre persone?',
+  type:'single',
+  options:['Sì','No','Non lo sa/Non vuole rispondere'],
+  image:null,
+  showIfAll:[
+    { id:'Q013_flagConnessione', equals:true },
+    { id:'Q027', notEquals:'Non utilizzo Internet' }       //questa condizione è inutile,esempio per vedere showifAll
+  ]
+},
+  {
+    id:'Q031',
+    showIf:{id:'Q030', equals:'Sì'},
+    section:'INTERNET',
+    text:'Con quale frequenza svolgi le seguenti attività online per comunicare con altre persone?',
+    type:'matrix',
+    rows:[
+      'Inviare o leggere e-mail',
+      'Fare videochiamate (Meet, Zoom, Facetime, WhatsApp video)',
+      'Usare servizi di messaggistica istantanea (WhatsApp, Telegram, Messenger)',
+      'Usare social network per comunicare (Facebook, Instagram, LinkedIn)'
+    ],
+    columns:['Mai','Meno di una volta ogni 3 mesi','Almeno una volta ogni 3 mesi','Almeno una volta al mese','Almeno una volta alla settimana','Ogni giorno o quasi ogni giorno'],
+    image:null
+  },
+  // Condizione C10: se Q032 = "Sì"
+  {
+    id:'Q032',
+    showIf:{id:'Q027', notEquals:'Non utilizzo Internet'},
+    section:'INTERNET',
+    text:'Negli ultimi 3 mesi hai utilizzato Internet per informarti o cercare contenuti?',
+    type:'single',
+    options:['Sì','No','Non lo sa/Non vuole rispondere'],
+    image:null
+  },
+  {
+    id:'Q033',
+    showIf:{id:'Q032', equals:'Sì'},
+    section:'INTERNET',
+    text:'Con quale frequenza cerchi i seguenti contenuti?',
+    type:'matrix',
+    rows:[
+      'Leggere notizie o articoli di attualità',
+      'Cercare informazioni su salute e assistenza sanitaria',
+      'Guardare film, programmi TV o video in streaming',
+      'Fare ricerche su Wikipedia o siti simili',
+      'Cercare informazioni su hobby o interessi personali (ricette, giardinaggio, bricolage, ecc.)',
+      'Cercare indicazioni stradali o mappe',
+      'Seguire i mercati finanziari'
+    ],
+    columns:['Mai','Meno di una volta ogni 3 mesi','Almeno una volta ogni 3 mesi','Almeno una volta al mese','Almeno una volta alla settimana','Ogni giorno o quasi ogni giorno'],
+    image:null
+  },
+  // Condizione C11: se Q034 = "Sì"
+  {
+    id:'Q034',
+    showIf:{id:'Q027', notEquals:'Non utilizzo Internet'},
+    section:'INTERNET',
+    text:'Negli ultimi 3 mesi hai utilizzato Internet per servizi pubblici?',
+    type:'single',
+    options:['Sì','No','Non lo sa/Non vuole rispondere'],
+    image:null
+  },
+  {
+    id:'Q035',
+    showIf:{id:'Q034', equals:'Sì'},
+    section:'INTERNET',
+    text:'Con quale frequenza svolgi le seguenti operazioni?',
+    type:'matrix',
+    rows:[
+      'Prenotare visite mediche online',
+      'Accedere a servizi pubblici digitali (SPID, CIE, Fascicolo Sanitario, Agenzia delle Entrate, INPS)',
+      'Altro'
+    ],
+    columns:['Mai','Meno di una volta ogni 3 mesi','Almeno una volta ogni 3 mesi','Almeno una volta al mese','Almeno una volta alla settimana','Ogni giorno o quasi ogni giorno'],
+    image:null
+  },
+  // Condizione C12: se Q036 = "Sì"
   {
     id:'Q036',
-    showIfAny:[
-      {id:'Q006', equals:'Disoccupato/a'},
-      {id:'Q006', equals:'Malato/a cronico/a o disabile'},
-      {id:'Q006', equals:'Casalingo/a'},
-    ],
-    section:'LAVORO',
-    text:'Hai mai svolto attività lavorativa?',
+    showIf:{id:'Q027', notEquals:'Non utilizzo Internet'},
+    section:'INTERNET',
+    text:'Negli ultimi 3 mesi hai utilizzato Internet per monitorare o gestire conti bancari o patrimonio finanziario?',
     type:'single',
     options:['Sì','No','Non lo sa/Non vuole rispondere'],
     image:null
   },
   {
     id:'Q037',
+    showIf:{id:'Q036', equals:'Sì'},
+    section:'INTERNET',
+    text:'Indica con che frequenza svolgi le seguenti operazioni.',
+    type:'matrix',
+    rows:[
+      'Controllare il saldo del conto bancario',
+      'Monitorare le tue spese personali',
+      'Effettuare bonifici o pagamenti',
+      'Controllare l’andamento dei propri titoli finanziari',
+      'Acquistare o vendere titoli finanziari'
+    ],
+    columns:['Mai','Meno di una volta ogni 3 mesi','Almeno una volta ogni 3 mesi','Almeno una volta al mese','Almeno una volta alla settimana','Ogni giorno o quasi ogni giorno'],
+    image:null
+  }
+);
+    // ====== BLOCCO: LAVORO ======
+   Q.push(
+  // ===== BLOCCO LAVORO: PENSIONATI E LAVORATORI =====
+  {
+    id:'Q038',
     showIfAny:[
-      {id:'Q006', equals:'In pensione da lavoro'},
-      {id:'Q006', equals:'Lavoratore dipendente o indipendente (incluso lavoro in attività di famiglia)'},
-      {id:'Q036', equals:'Sì'}
+      {id:'Q007', equals:'In pensione da lavoro'},
+      {id:'Q007', equals:'Lavoratore dipendente o indipendente (incluso lavoro in attività di famiglia)'}
     ],
     section:'LAVORO',
-    text:'Rispondi Sì/No alle seguenti domande:',
+    text:'Rispondi alle seguenti domande.',
     type:'ynList',
     items:[
-      'Hai mai utilizzato il computer per lavoro?',
-      'Hai mai partecipato a corsi di formazione online negli ultimi 12 mesi?',
-      'Hai mai partecipato a riunioni online negli ultimi 12 mesi?',
+      'Hai mai utilizzato un computer per lavoro?',
+      'Hai mai partecipato a corsi di formazione online?',
+      'Hai mai partecipato a riunioni online?',
       'Hai mai utilizzato strumenti di condivisione file (Google Drive, Dropbox)?',
       'Lavori o hai lavorato mai in smart working?'
     ],
     image:null
   },
   {
-    id:'Q038',
+    id:'Q039',
     showIfAny:[
-      {id:'Q006', equals:'In pensione da lavoro'},
-      {id:'Q006', equals:'Lavoratore dipendente o indipendente (incluso lavoro in attività di famiglia)'},
-      {id:'Q036', equals:'Sì'}
+      {id:'Q007', equals:'In pensione da lavoro'},
+      {id:'Q007', equals:'Lavoratore dipendente o indipendente (incluso lavoro in attività di famiglia)'}
     ],
     section:'LAVORO',
     text:'Come valuteresti le tue competenze informatiche nell’utilizzo delle seguenti applicazioni?',
@@ -700,16 +747,65 @@ Q.unshift({
       'Files multimediali (audio, video, immagini)',
       'Progettazione di siti web',
       'Motori di ricerca sul web (es. Google)',
-      'Comunicazione (es. email, videoconferenze)'
+      'Comunicazione (es. e-mail, videoconferenze)'
     ],
-    columns:['Nessuna','Base','Intermedia','Avanzata'],
+    columns:['Debole','Discreta','Buona','Molto Buona','Ottima'],
+    image:null
+  },
+  // ===== BLOCCO LAVORO: DISOCCUPATI, CASALINGHE, MALATI =====
+  {
+    id:'Q040',
+    showIfAny:[
+      {id:'Q007', equals:'Disoccupato/a'},
+      {id:'Q007', equals:'Malato/a cronico/a o disabile'},
+      {id:'Q007', equals:'Casalingo/a'}
+    ],
+    section:'LAVORO',
+    text:'Hai mai svolto attività lavorativa retribuita?',
+    type:'single',
+    options:['Sì','No','Non lo sa/Non vuole rispondere'],
+    image:null
+  },
+  {
+    id:'Q041',
+    showIf:{id:'Q040', equals:'Sì'},
+    section:'LAVORO',
+    text:'Rispondi alle seguenti domande.',
+    type:'ynList',
+    items:[
+      'Hai mai utilizzato un computer per lavoro?',
+      'Hai mai partecipato a corsi di formazione online?',
+      'Hai mai partecipato a riunioni online?',
+      'Hai mai utilizzato strumenti di condivisione file (Google Drive, Dropbox)?',
+      'Hai mai lavorato in smart working?'
+    ],
+    image:null
+  },
+  {
+    id:'Q042',
+    showIf:{id:'Q040', equals:'Sì'},
+    section:'LAVORO',
+    text:'Come valuteresti le tue competenze informatiche nell’utilizzo delle seguenti applicazioni o software?',
+    type:'matrix',
+    rows:[
+      'Videoscrittura (es. Word)',
+      'Fogli di calcolo (es. Excel)',
+      'Gestione di database',
+      'Applicazioni per presentazioni (es. PowerPoint)',
+      'Files multimediali (audio, video, immagini)',
+      'Progettazione di siti web',
+      'Motori di ricerca sul web (es. Google)',
+      'Comunicazione (es. e-mail, videoconferenze)'
+    ],
+    columns:['Debole','Discreta','Buona','Molto buona','Ottima'],
     image:null
   }
 );
+
     // ====== BLOCCO: SICUREZZA ======
     Q.push(
       {
-        id:'Q039',
+        id:'Q043',
         section:'SICUREZZA',
         text:'Solitamente prendi precauzioni per proteggere i tuoi dati online?',
         type:'single',
@@ -717,8 +813,8 @@ Q.unshift({
         image:null
       },
       {
-        id:'Q040',
-        showIf:{id:'Q039', equals:'Sì'},
+        id:'Q044',
+        showIf:{id:'Q043', equals:'Sì'},
         section:'SICUREZZA',
         text:'Seleziona le pratiche che adotti (Sì/No per ciascuna).',
         type:'ynList',
@@ -729,235 +825,279 @@ Q.unshift({
           'Controlli solitamente le impostazioni di privacy sui social?'
         ],
         image:null
-      },
-      {
-        id:'Q041',
-        showIf:{id:'Q039', equals:'Sì'},
-        section:'SICUREZZA',
-        text:'Quale password ti sembra più sicura?',
-        type:'single',
-        options:[
-          'P4ssw0rd!',
-          'Maria1970',
-          'Tr*9kLm!28#q',
-          '1234567',
-          'Non lo sa/Non vuole rispondere'
-        ],
-        correct:'Tr*9kLm!28#q',
-        image:null
       }
     );
 
     // ====== BLOCCO: ICONE / CONOSCENZE ======
     Q.push(
-      {
-        id:'Q042',
-        section:'ICONE',
-        text:' Quando compare questo simbolo vicino all’indirizzo di un sito web, cosa significa?',
-        type:'single',
-        options:[
-          '1. Il sito è stato visitato di recente',
-          '2. Il sito è a pagamento',
-          '3. La connessione tra il tuo dispositivo e il sito è sicura',
-          '4. Il sito non funziona senza password',
-          '5. Non lo sa/Non vuole rispondere',
-        ],
-        correct:'A. La connessione tra il tuo dispositivo e il sito è sicura',
-        image:'www/lucchetto.jpg'
-      },
-      {
-        id:'Q043',
-        section:'ICONE',
-        text:'Cosa permette di fare questa icona sullo smartphone o computer?',
-        type:'single',
-        options:[
-          '1. Avviare la fotocamera',
-          '2. Spegnere il dispositivo',
-          '3. Aggiornare un’applicazione',
-          '4. Aprire il menu delle impostazioni',
-          '5. Non lo sa/Non vuole rispondere'
-        ],
-        correct:'A. Aprire il menu delle impostazioni',
-        image:'www/ingranaggio.jpg'
-      },
-      {
-        id:'Q044',
-        section:'ICONE',
-        text:' Cosa rappresenta questa icona?',
-        type:'single',
-        options:[
-          '1. Email o messaggi',
-          '2. Rubrica dei contatti',
-          '3. Lista degli appuntamenti',
-          '4. Documenti salvati',
-          '5. Non lo sa/Non vuole rispondere',
-        ],
-        correct:'A. Email o messaggi',
-        image:'www/email.jpg'
-      },
-      {
-        id:'Q045',
-        section:'ICONE',
-        text:'Quando questa icona è piena e luminosa, cosa indica?',
-        type:'single',
-        options:[
-          '1. Il dispositivo sta scaricando dati',
-          '2. È attiva la connessione Bluetooth',
-          '3. Sei connesso a Internet tramite rete wireless',
-          '4. Stai guardando un video online',
-          '5. Non lo sa/Non vuole rispondere',
-        ],
-        correct:'A. Sei connesso a Internet tramite rete wireless',
-        image:'www/wifi.png'
-      },
-      {
-        id:'Q046',
-        section:'ICONE',
-        text:' A cosa serve questa funzione su smartphone, tablet o computer?',
-        type:'single',
-        options:[
-          '1. Collegare dispositivi senza fili (cuffie, casse, tastiere)',
-          '2. Navigare in Internet ad alta velocità',
-          '3. Bloccare l’accesso al dispositivo',
-          '4. Salvare file nella memoria interna',
-          '5. Non lo sa/Non vuole rispondere',
-        ],
-        correct:'A. Collegare dispositivi senza fili (cuffie, casse, tastiere)',
-        image:'www/blue.jpg'
-      },
-      {
-        id:'Q047',
-        section:'ICONE',
-        text:' Cosa puoi fare con questo tipo di codice?',
-        type:'single',
-        options:[
-          '1. Usarlo per aumentare la velocità di connessione Internet',
-          '2. Scansionarlo per aprire un link, ottenere informazioni o accedere a un servizio',
-          '3. Inserirlo come password per accedere al computer',
-          '4. Stamparlo per decorare un documento',
-          '5. Non lo sa/Non vuole rispondere',
-        ],
-        correct:'A. Scansionarlo per aprire un link, ottenere informazioni o accedere a un servizio',
-        image:'www/download.png'
-      },
-      {
-        id: 'Q048',
-        section: 'COMPETENZE',
-        type: 'task',
-        text: 'Copia il testo mostrato qui sotto e incollalo nel campo di testo. Se non sei in grado di completare l’attività, puoi lasciare il campo vuoto oppure digitare "non lo so".',
-        taskKind: 'copypaste',
-        taskText: 'Digitalizzazione',
-        correct: 'Digitalizzazione',
-        skippable: true 
-      },
-      {
-        id:'Q049',
-        section:'TEST',
-        text:'<p>Con l’ ausilio del PC dell’ intervistatore crea una cartella sul desktop .</p><p>Giudizio sulle abilità dell’ intervistato nello svolgimento del test',
-        type:'single',
-        options:[,'1 (Non lo sa fare)','2 (Lo fa solo con aiuto costante)','3 (Lo fa con difficoltà)','4 (Lo fa quasi in autonomia)','5 (Lo fa in piena autonomia)'],
-      },
-      {
-        id:'Q050',
-        
-        section:'TEST',
-        showIfAny:[
-          {id:'Q049', equals:'2 (Lo fa solo con aiuto costante)'},
-          {id:'Q049', equals:'3 (Lo fa con difficoltà)'},
-          {id:'Q049', equals:'4 (Lo fa quasi in autonomia)'},
-          {id:'Q049', equals:'5 (Lo fa in piena autonomia)'},
-        ],
-        text:'<p>Inserisci all’interno della cartella appena creata il file “test.txt”.</p><p>Giudizio sulle abilità dell’ intervistato nello svolgimento del test',
-        type:'single',
-        options:['1 (Non lo sa fare)','2 (Lo fa solo con aiuto costante)','3 (Lo fa con difficoltà)','4 (Lo fa quasi in autonomia)','5 (Lo fa in piena autonomia)'],
-      },
-      {
-        id:'Q051',
-        
-        section:'TEST',
-        showIfAny:[
-          {id:'Q050', equals:'2 (Lo fa solo con aiuto costante)'},
-          {id:'Q050', equals:'3 (Lo fa con difficoltà)'},
-          {id:'Q050', equals:'4 (Lo fa quasi in autonomia)'},
-          {id:'Q050', equals:'5 (Lo fa in piena autonomia)'},
-        ],
-        text:'<p>Trasforma il file "test.txt" in formato "test.csv".</p><p>Giudizio sulle abilità dell’ intervistato nello svolgimento del test',
-        type:'single',
-        options:['1 (Non lo sa fare)','2 (Lo fa solo con aiuto costante)','3 (Lo fa con difficoltà)','4 (Lo fa quasi in autonomia)','5 (Lo fa in piena autonomia)'],
-      },
-      {
-        id:'Q052',
-        section:'TEST',
-        text:'<p>Modifica la luminosità dello schermo .</p><p>Giudizio sulle abilità dell’ intervistato nello svolgimento del test',
-        type:'single',
-        options:['1 (Non lo sa fare)','2 (Lo fa solo con aiuto costante)','3 (Lo fa con difficoltà)','4 (Lo fa quasi in autonomia)','5 (Lo fa in piena autonomia)'],
-      },
-      {
-        id:'Q053', 
-        section:'TEST',
-        text:'<p>Controlla le reti wi-fi che sono disponibili nelle vicinanze, cioè quelle in cui potresti collegarti.</p><p>Giudizio sulle abilità dell’ intervistato nello svolgimento del test',
-        type:'single',
-        options:['1 (Non lo sa fare)','2 (Lo fa solo con aiuto costante)','3 (Lo fa con difficoltà)','4 (Lo fa quasi in autonomia)','5 (Lo fa in piena autonomia)'],
-      },
-      {
-        id:'Q054',
-        section:'TEST',
-        text:'<p>Apri un motore di ricarca internet e cerca le previsioni meteo della tua città.</p><p>Giudizio sulle abilità dell’ intervistato nello svolgimento del test',
-        type:'single',
-        options:['1 (Non lo sa fare)','2 (Lo fa solo con aiuto costante)','3 (Lo fa con difficoltà)','4 (Lo fa quasi in autonomia)','5 (Lo fa in piena autonomia)'],
-      },
-      {
-        id:'Q055',
-        section:'TEST',
-        showIfAny:[
-          {id:'Q054', equals:'2 (Lo fa solo con aiuto costante)'},
-          {id:'Q054', equals:'3 (Lo fa con difficoltà)'},
-          {id:'Q054', equals:'4 (Lo fa quasi in autonomia)'},
-          {id:'Q054', equals:'5 (Lo fa in piena autonomia)'},
-        ],
-        text:'<p>Aggiungi il sito visitato nella domanda precedente alla barra dei preferiti(o segnalibri).</p><p>Giudizio sulle abilità dell’ intervistato nello svolgimento del test',
-        type:'single',
-        options:['1 (Non lo sa fare)','2 (Lo fa solo con aiuto costante)','3 (Lo fa con difficoltà)','4 (Lo fa quasi in autonomia)','5 (Lo fa in piena autonomia)'],
-      },
-      {
-        id:'Q056',
-        section:'TEST',
-        text:'<p>Apri un file word , scrivi la parola "digitalizzazione" con carattere 24 e mettila in grasseto".</p><p>Giudizio sulle abilità dell’ intervistato nello svolgimento del test',
-        type:'single',
-        options:['1 (Non lo sa fare)','2 (Lo fa solo con aiuto costante)','3 (Lo fa con difficoltà)','4 (Lo fa quasi in autonomia)','5 (Lo fa in piena autonomia)'],
-      },
-      {
-        id:'Q057',
-        section:'TEST',
-        text:'<p>Apri un foglio excel e somma i numeri dati nelle celle A1 e A2 all’interno della cella A3.</p><p>Giudizio sulle abilità dell’ intervistato nello svolgimento del test',
-        type:'single',
-        options:['1 (Non lo sa fare)','2 (Lo fa solo con aiuto costante)','3 (Lo fa con difficoltà)','4 (Lo fa quasi in autonomia)','5 (Lo fa in piena autonomia)'],
-      },
-    );
+  // ===== SEZIONE ICONE =====
+  {
+    id: 'Q045',
+    section: 'ICONE',
+    text: 'Quando compare questo simbolo vicino all’indirizzo di un sito web, cosa significa?',
+    type: 'single',
+    options: [
+      'La connessione tra il tuo dispositivo e il sito è sicura',
+      'Il sito è stato visitato di recente',
+      'Il sito è a pagamento',
+      'Il sito non funziona senza password',
+      'Non lo sa/Non vuole rispondere'
+    ],
+    image: 'www/lucchetto.jpg'
+  },
+  {
+    id: 'Q046',
+    section: 'ICONE',
+    text: 'Cosa permette di fare questa icona sullo smartphone o computer?',
+    type: 'single',
+    options: [
+      'Aprire il menu delle impostazioni',
+      'Avviare la fotocamera',
+      'Spegnere il dispositivo',
+      'Aggiornare un’applicazione',
+      'Non lo sa/Non vuole rispondere'
+    ],
+    image: 'www/ingranaggio.jpg'
+  },
+  {
+    id: 'Q047',
+    section: 'ICONE',
+    text: 'Cosa rappresenta questa icona?',
+    type: 'single',
+    options: [
+      'E-mail o messaggi',
+      'Rubrica dei contatti',
+      'Lista degli appuntamenti',
+      'Documenti salvati',
+      'Non lo sa/Non vuole rispondere'
+    ],
+    image: 'www/email.jpg'
+  },
+  {
+    id: 'Q048',
+    section: 'ICONE',
+    text: 'Quando questa icona è piena e luminosa, cosa indica?',
+    type: 'single',
+    options: [
+      'Sei connesso a Internet tramite rete wireless',
+      'Il dispositivo sta scaricando dati',
+      'È attiva la connessione Bluetooth',
+      'Stai guardando un video online',
+      'Non lo sa/Non vuole rispondere'
+    ],
+    image: 'www/wifi.png'
+  },
+  {
+    id: 'Q049',
+    section: 'ICONE',
+    text: 'A cosa serve questa funzione su smartphone, tablet o computer?',
+    type: 'single',
+    options: [
+      'Collegare dispositivi senza fili (cuffie, casse, tastiere)',
+      'Navigare in Internet ad alta velocità',
+      'Bloccare l’accesso al dispositivo',
+      'Salvare file nella memoria interna',
+      'Non lo sa/Non vuole rispondere'
+    ],
+    image: 'www/blue.jpg'
+  },
+  {
+    id: 'Q050',
+    section: 'ICONE',
+    text: 'Cosa puoi fare con questo tipo di codice?',
+    type: 'single',
+    options: [
+      'Scansionarlo per aprire un link, ottenere informazioni o accedere a un servizio',
+      'Usarlo per aumentare la velocità di connessione Internet',
+      'Inserirlo come password per accedere al computer',
+      'Stamparlo per decorare un documento',
+      'Non lo sa/Non vuole rispondere'
+    ],
+    image: 'www/download.png'
+  },
+  {
+    id: 'Q051',
+    section: 'ICONE',
+    text: 'Quale password ti sembra più sicura?',
+    type: 'single',
+    options: [
+      '1234567',
+      'Maria1970',
+      'P4ssw0rd!',
+      'Tr*9kLm!28#q',
+      'Non lo sa/Non vuole rispondere'
+    ]
+  },
 
+  // ===== SEZIONE TEST =====
+  {
+    id: 'Q052',
+    section: 'TEST',
+    type: 'task',
+    text: 'Copia il testo riportato qui sotto e incollalo nel campo di testo. Se non sei in grado di completare l’attività puoi lasciare il campo vuoto oppure digitare “non lo so fare”.',
+    taskKind: 'copypaste',
+    taskText: 'Digitalizzazione',
+    correct: 'Digitalizzazione',
+    skippable: true
+  },
+  {
+    id: 'Q053',
+    section: 'TEST',
+    type: 'single',
+    text: 'Con l’ausilio del PC dell’intervistatore, crea una cartella sul desktop.',
+    options: [
+      '1 (Non lo sa fare)',
+      '2 (Lo fa solo con aiuto costante)',
+      '3 (Lo fa con difficoltà)',
+      '4 (Lo fa quasi in autonomia)',
+      '5 (Lo fa in piena autonomia)'
+    ]
+  },
+  {
+    id: 'Q054',
+    section: 'TEST',
+    type: 'single',
+    showIfAny: [
+      {id: 'Q053', equals: '2 (Lo fa solo con aiuto costante)'},
+      {id: 'Q053', equals: '3 (Lo fa con difficoltà)'},
+      {id: 'Q053', equals: '4 (Lo fa quasi in autonomia)'},
+      {id: 'Q053', equals: '5 (Lo fa in piena autonomia)'}
+    ],
+    text: 'Inserisci all’interno della cartella appena creata il file “test.txt”.',
+    options: [
+      '1 (Non lo sa fare)',
+      '2 (Lo fa solo con aiuto costante)',
+      '3 (Lo fa con difficoltà)',
+      '4 (Lo fa quasi in autonomia)',
+      '5 (Lo fa in piena autonomia)'
+    ]
+  },
+  {
+    id: 'Q055',
+    section: 'TEST',
+    type: 'single',
+    showIfAny: [
+      {id: 'Q054', equals: '2 (Lo fa solo con aiuto costante)'},
+      {id: 'Q054', equals: '3 (Lo fa con difficoltà)'},
+      {id: 'Q054', equals: '4 (Lo fa quasi in autonomia)'},
+      {id: 'Q054', equals: '5 (Lo fa in piena autonomia)'}
+    ],
+    text: 'Trasforma il file “test.txt” in formato “test.csv”.',
+    options: [
+      '1 (Non lo sa fare)',
+      '2 (Lo fa solo con aiuto costante)',
+      '3 (Lo fa con difficoltà)',
+      '4 (Lo fa quasi in autonomia)',
+      '5 (Lo fa in piena autonomia)'
+    ]
+  },
+  {
+    id: 'Q056',
+    section: 'TEST',
+    type: 'single',
+    text: 'Modifica la luminosità dello schermo.',
+    options: [
+      '1 (Non lo sa fare)',
+      '2 (Lo fa solo con aiuto costante)',
+      '3 (Lo fa con difficoltà)',
+      '4 (Lo fa quasi in autonomia)',
+      '5 (Lo fa in piena autonomia)'
+    ]
+  },
+  {
+    id: 'Q057',
+    section: 'TEST',
+    type: 'single',
+    text: 'Controlla le reti wi-fi che sono disponibili nelle vicinanze, cioè quelle in cui potresti collegarti.',
+    options: [
+      '1 (Non lo sa fare)',
+      '2 (Lo fa solo con aiuto costante)',
+      '3 (Lo fa con difficoltà)',
+      '4 (Lo fa quasi in autonomia)',
+      '5 (Lo fa in piena autonomia)'
+    ]
+  },
+  {
+    id: 'Q058',
+    section: 'TEST',
+    type: 'single',
+    text: 'Apri un motore di ricerca internet e cerca le previsioni meteo della tua città.',
+    options: [
+      '1 (Non lo sa fare)',
+      '2 (Lo fa solo con aiuto costante)',
+      '3 (Lo fa con difficoltà)',
+      '4 (Lo fa quasi in autonomia)',
+      '5 (Lo fa in piena autonomia)'
+    ]
+  },
+  {
+    id: 'Q059',
+    section: 'TEST',
+    type: 'single',
+    showIfAny: [
+      {id: 'Q058', equals: '2 (Lo fa solo con aiuto costante)'},
+      {id: 'Q058', equals: '3 (Lo fa con difficoltà)'},
+      {id: 'Q058', equals: '4 (Lo fa quasi in autonomia)'},
+      {id: 'Q058', equals: '5 (Lo fa in piena autonomia)'}
+    ],
+    text: 'Aggiungi il sito visitato nella domanda precedente alla barra dei preferiti (o segnalibri).',
+    options: [
+      '1 (Non lo sa fare)',
+      '2 (Lo fa solo con aiuto costante)',
+      '3 (Lo fa con difficoltà)',
+      '4 (Lo fa quasi in autonomia)',
+      '5 (Lo fa in piena autonomia)'
+    ]
+  },
+  {
+    id: 'Q060',
+    section: 'TEST',
+    type: 'single',
+    text: 'Apri Word e in un foglio vuoto scrivi la parola “digitalizzazione” con carattere 24 e mettila in grassetto.',
+    options: [
+      '1 (Non lo sa fare)',
+      '2 (Lo fa solo con aiuto costante)',
+      '3 (Lo fa con difficoltà)',
+      '4 (Lo fa quasi in autonomia)',
+      '5 (Lo fa in piena autonomia)'
+    ]
+  },
+  {
+    id: 'Q061',
+    section: 'TEST',
+    type: 'single',
+    text: 'Apri il foglio Excel intitolato “Test” e somma i numeri dati nelle celle A1 e A2, all’interno della cella A3.',
+    options: [
+      '1 (Non lo sa fare)',
+      '2 (Lo fa solo con aiuto costante)',
+      '3 (Lo fa con difficoltà)',
+      '4 (Lo fa quasi in autonomia)',
+      '5 (Lo fa in piena autonomia)'
+    ]
+  }
+);
     // ====== BLOCCO: FINALI (Likert) ======
     Q.push(
-      {
-        id:'Q058',
-        section:'FINALE',
-        text:'Indica in che misura sei d’accordo con le seguenti affermazioni.',
-        type:'matrix',
-        rows:[
-          'Mi piace usare i dispositivi digitali.',
-          'Mi sento a mio agio nell’utilizzarli.',
-          'Sono disposto/a a imparare nuove funzioni dei dispositivi digitali.',
-          'Penso che i dispositivi digitali siano complicati da usare.',
-          'Mi sento in difficoltà quando altre persone parlano di tecnologia digitale.',
-          'Credo che sia importante per me imparare a usare meglio i dispositivi digitali.',
-          'Mi piacerebbe usare più spesso i dispositivi digitali nella vita quotidiana.',
-          'Penso che i dispositivi digitali possano rendere più semplici alcune attività (es. viaggiare, pagare bollette, cercare informazioni).',
-          'Credo che dovrebbero esistere più corsi o iniziative di formazione per aiutare persone della mia età a usare i dispositivi digitali.'
-        ],
-        columns:['Fortemente d’accordo','D’accordo','Indeciso','In disaccordo','Fortemente in disaccordo'],
-        image:null
-      }
-    );
-
+  {
+    id:'Q062',
+    section:'FINALE',
+    text:'Indica in che misura sei d’accordo o in disaccordo con le seguenti affermazioni:',
+    type:'matrix',
+    rows:[
+      'Mi piace usare i dispositivi digitali',
+      'Mi sento a mio agio nell’utilizzarli',
+      'Sono disposto/a a imparare nuove funzioni dei dispositivi digitali',
+      'Penso che i dispositivi digitali siano complicati da usare',
+      'Mi sento in difficoltà quando altre persone parlano di tecnologia digitale',
+      'Credo che dovrebbero esistere più corsi o iniziative di formazione per aiutare persone della mia età a usare i dispositivi digitali',
+      'Credo che sia importante per me imparare a usare meglio i dispositivi digitali',
+      'Mi piacerebbe usare più spesso i dispositivi digitali nella vita quotidiana',
+      'Penso che i dispositivi digitali possano rendere più semplici alcune attività (es. viaggiare, pagare bollette, cercare informazioni)'
+    ],
+    columns:['Fortemente d’accordo','D’accordo','Indeciso','In disaccordo','Fortemente in disaccordo'],
+    image:null
+  }
+);
     /***********************
      * STATO & NAVIGAZIONE
      ***********************/
@@ -978,7 +1118,6 @@ Q.unshift({
       if(Array.isArray(v)) return v.includes(cond.equals);
       return v === cond.equals;
     }
-
     // includes → controlla che l'opzione sia contenuta nell'array
     if(cond.includes !== undefined){
       const vv = Array.isArray(v) ? v : [];
@@ -1008,6 +1147,7 @@ Q.unshift({
 
     // showIfAny (array di condizioni, basta che una sia vera)
     if(q.showIfAny && !q.showIfAny.some(checkCondition)) return false;
+    if(q.showIfAll && !q.showIfAll.every(checkCondition)) return false;
 
     // showIfNotSelected (stile vecchio)
     if(q.showIfNotSelected){
@@ -1080,6 +1220,11 @@ Q.unshift({
       ${q.options.map(op => `<option value="${op}" ${val===op?'selected':''}>${op}</option>`).join('')}
     </select>`;
       }
+      if(q.type === 'calculated'){
+  // opzionale: mostra solo per debug
+  // $('#q-wrap').html(`Valore calcolato: ${state.answers[q.id]}`);
+  return; // oppure salta completamente il rendering
+}
       if(q.type === 'task' && q.taskKind === 'copypaste') {
   content += `
     <div class="task-box">
@@ -1131,10 +1276,10 @@ Q.unshift({
           `;
         }
       }
-      if(q.id === 'Q008'){
+      if(q.id === 'Q009'){
   setTimeout(()=>{
-    const $checks = $(`input[name="Q008"]`);
-    const $nessuno = $checks.filter('[value="Nessuna proprietà o accesso a dispositivi connessi a Internet"]');
+    const $checks = $(`input[name="Q009"]`);
+    const $nessuno = $checks.filter('[value="Nessuno di questi"]');
 
     $checks.on('change', function(){
       if($nessuno.is(':checked')){
@@ -1296,6 +1441,15 @@ Q.unshift({
       if(q.type === 'dropdown'){
   return document.getElementById('answer').value || null;
       }
+     if(q.type === 'calculated') {
+  let ans = false;
+  try {
+    ans = eval(q.expression); // valuta l’espressione JS
+  } catch(e) {
+    console.error('Errore calcolo Q:', q.id, e);
+  }
+  return ans; // true o false
+}
       if(q.type==='single'){
         const v = $(`input[name="${q.id}"]:checked`).val();
         return v || null;
@@ -1363,8 +1517,12 @@ Q.unshift({
       // se q è condizionato e la condizione non è soddisfatta, non viene nemmeno renderizzato (già filtrato)
       return false;
     }
-
+    function updateCalculatedFlags() {
+  const ansMatrix = state.answers['Q013_Q014_Q015_Q016'] || {};
+  state.answers['Q013_flagConnessione'] = Object.values(ansMatrix).some(o => o.connessione === 'Sì');
+}
     function validateAndSave(){
+      
       const V = visibleQuestions();
       const q = V[state.index];
       // Salta la validazione per la pagina di benvenuto
@@ -1381,7 +1539,7 @@ Q.unshift({
 
       const ans = readAnswer(q);
     state.answers[q.id] = ans;
-
+   updateCalculatedFlags();
       // Salvataggio su Supabase (uno o più record a seconda del tipo)
       const saveRows = [];
 
@@ -1416,6 +1574,18 @@ Q.unshift({
     }
     saveRows.push(basePayload(q.id, ans, null));
       }
+      if(q.type === 'calculated') {
+  const ans = state.answers[q.id]; // già calcolato da readAnswer
+  // salva comunque il risultato su Supabase o log locale
+  saveRows.push({
+    nome,
+    domanda: q.id,
+    risposta: ans,
+    corretto: null,
+    esito: 'n/a'
+  });
+  return true; // passa la validazione
+}
      // --- Controllo specifico per task copypaste ---
     if(q.type === 'task' && q.taskKind === 'copypaste') {
     let correctAnswer = null;
