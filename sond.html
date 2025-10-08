@@ -1162,7 +1162,7 @@ options: [
     ],
     columns:['1.Fortemente d’accordo','2.D’accordo','3.Indeciso','4.In disaccordo','5.Fortemente in disaccordo'],
     image:null
-  }
+  },
 );
     /***********************
      * STATO & NAVIGAZIONE
@@ -1172,7 +1172,6 @@ options: [
       answers: {}, // id -> value
       history: [], // stack di indici visitati per "Indietro"
     };
-
    function visibleQuestions(){
   const ans = state.answers;
 
@@ -1652,26 +1651,32 @@ if (!codice) {
   // Salvataggio su Supabase (uno o più record a seconda del tipo)
   const saveRows = [];
 
-  const basePayload = (domanda, risposta, correct = null) => {
-    let esito = 'n/a';
-    if (correct !== null) {
-      if (Array.isArray(risposta)) {
-        const ok =
-          risposta.sort().join('||') ===
-          (Array.isArray(correct) ? correct.sort().join('||') : String(correct));
-        esito = ok ? 'corretto' : 'sbagliato';
-      } else {
-        esito = String(risposta) === String(correct) ? 'corretto' : 'sbagliato';
-      }
+const basePayload = (domanda, risposta, correct = null) => {
+  let esito = 'n/a';
+  let correttoVal = null; // <- nuovo
+
+  if (correct !== null) {
+    if (Array.isArray(risposta)) {
+      const ok =
+        risposta.sort().join('||') ===
+        (Array.isArray(correct) ? correct.sort().join('||') : String(correct));
+      esito = ok ? 'corretto' : 'sbagliato';
+      correttoVal = ok; // <- boolean
+    } else {
+      const ok = String(risposta).trim() === String(correct).trim();
+      esito = ok ? 'corretto' : 'sbagliato';
+      correttoVal = ok; // <- boolean
     }
-    return {
-      domanda,
-      risposta: typeof risposta === 'string' ? risposta : JSON.stringify(risposta),
-      corretto: correct,
-      esito,
-      codice,
-    };
+  }
+
+  return {
+    domanda,
+    risposta: typeof risposta === 'string' ? risposta : JSON.stringify(risposta),
+    corretto: correttoVal, // <- qui invece di correct
+    esito,
+    codice,
   };
+};
 
   // --- Tipi di domande ---
   if (q.type === 'single') {
