@@ -402,7 +402,7 @@ options: [
       choices:['1.Meno di 1 anno','2.Meno di 2 anni','3.Meno di 3 anni','4.Meno di 4 anni','5.4 anni o più','99.Non lo sa/Non vuole rispondere']
     },
     {
-      key:'abilità',
+      key:'abilita',
       label:'Come valuteresti la tua abilità nel suo utilizzo?',
       choices:['1.Scarsa','2.Discreta','3.Buona','4.Molto buona','5.Ottima','99.Non lo sa/Non vuole rispondere']
     },
@@ -753,7 +753,7 @@ options: [
   },
   {
     id:'Q037',
-    showIf:{id:'Q036', equals:'Sì'},
+    showIf:{id:'Q036', equals:'1.Sì'},
     section:'INTERNET',
     text:'Indica con che frequenza svolgi le seguenti operazioni.',
     type:'matrix',
@@ -1422,7 +1422,15 @@ if(q.type==='multi'){
     <div class="question-sub">Seleziona una risposta per ciascuna riga.</div>`;
     }      
       if(q.type==='matrixPerItem'){
-    const items = (state.answers[q.perItemSource] || []).slice();
+    const fullList = state.answers['Q009_lista'] || [];
+    const selected = state.answers[q.perItemSource] || [];
+
+    // ✅ Aggiungi gestione "Altro (specificare)"
+    const items = fullList.filter(d => 
+        selected.includes(d) || 
+        (d === '97.Altro (specificare)' && selected.some(s => !fullList.includes(s)))
+    );
+
     content += `<div class="matrix-wrap">
         <table class="matrix">
             <thead>
@@ -1434,8 +1442,10 @@ if(q.type==='multi'){
                 items.map((item,ri)=>{
                     const base=`${q.id}_${ri}`;
                     const rowVal = (val && val[item]) || {};
+                    // Se è "Altro", mostra il testo specificato
+                    const displayName = item === '97.Altro (specificare)' ? selected.find(s => !fullList.includes(s)) : item;
                     return `<tr>
-                        <td style="text-align:left">${item}</td>` +
+                        <td style="text-align:left">${displayName}</td>` +
                         q.columns.map((col,ci)=>{
                             const name = `${base}_${col.key}`;
                             const current = rowVal[col.key] || '';
@@ -1452,7 +1462,7 @@ if(q.type==='multi'){
         </table>
     </div>
     <div class="question-sub">Compila le colonne per ogni dispositivo selezionato.</div>`;
-   }
+}
       if(q.type==='ynList'){
         content += `<div class="options">` + q.items.map((it,idx)=>{
           const idBase = `${q.id}_${idx}`;
@@ -1579,49 +1589,48 @@ if(q.type==='multi'){
 }
 
 
-      if(q.type==='matrixPerItem'){
-        const items = (state.answers[q.perItemSource] || []);
-        const res = {};
-        let ok = true;
-        items.forEach((item,i)=>{
-          res[item] = {};
-          q.columns.forEach(col=>{
-            const val = $(`#${q.id}_${i}_${col.key}`).val();
-            if(!val) ok = false;
-            res[item][col.key] = val || '';
-          });
-        });
-        return ok ? res : null;
-      }
+     if (q.type === 'matrixPerItem') {
+  const items = (state.answers[q.perItemSource] || []);
+  const res = {};
+
+  items.forEach((item, i) => {
+    res[item] = {};
+    q.columns.forEach(col => {
+      const val = $(`#${q.id}_${i}_${col.key}`).val();
+      res[item][col.key] = val || '';
+    });
+  });
+
+  return res; // sempre restituito, anche se incompleto
+}
+
      if(q.type === 'task' && q.taskKind === 'copypaste') {
   const val = ($('#taskAnswer').val()||'').trim();
   return val ? val : null;
       }
-      if (q.type === 'matrix') {
+     if (q.type === 'matrix') {
   const res = {};
-  let ok = true;
   q.rows.forEach((r, ri) => {
     const baseId = `${q.id}_r${ri}`;
-    const val = $(`input[name="${baseId}"]:checked`).val() || null;
-    if (!val) ok = false;
+    const val = $(`input[name="${baseId}"]:checked`).val() || '';
     res[r] = val;
   });
   if (q.rowOther) {
     res.__otherText = $(`#${q.id}_other`).val() || '';
   }
-  return ok ? res : null;
+  return res; // sempre restituito
 }
-      if(q.type==='ynList'){
-        const res = {};
-        let ok = true;
-        q.items.forEach((it,idx)=>{
-          const name = `${q.id}_${idx}`;
-          const v = $(`input[name="${name}"]:checked`).val();
-          if(!v) ok = false;
-          res[it] = v || '';
-        });
-        return ok ? res : null;
-      }
+
+ if (q.type === 'ynList') {
+  const res = {};
+  q.items.forEach((it, idx) => {
+    const name = `${q.id}_${idx}`;
+    const v = $(`input[name="${name}"]:checked`).val() || '';
+    res[it] = v;
+  });
+  return res; // sempre restituito
+}
+
       if(q.type==='rank'){
         const arr = Array.from(document.querySelectorAll(`#${q.id}_rank .rank-item`)).map(li=>li.getAttribute('data-val'));
         return arr.length ? arr : null;
@@ -1642,6 +1651,19 @@ if(q.type==='multi'){
     state.answers['Q013_flagConnessione'][dispositivo] = risposta.connessione === '1.Sì';
   });
 }
+// === FUNZIONE PER CODICI ABBREVIATI ===
+function shortCode(qid, subkey, extra = null) {
+  const base = qid.replace(/^Q0*/, 'Q'); // Q029 → Q29
+  const clean = subkey
+    ? subkey
+        .replace(/[^a-zA-Z0-9]/g, '_')
+        .replace(/_+/g, '_')
+        .replace(/^_|_$/g, '')
+    : '';
+  const tail = extra ? `_${extra}` : '';
+  return clean ? `${base}_${clean}${tail}` : base;
+}
+
    function validateAndSave() {
   const V = visibleQuestions();
   const q = V[state.index];
@@ -1756,35 +1778,62 @@ const basePayload = (domanda, risposta, correct = null) => {
     saveRows.push(basePayload(q.id, ans, q.correct ?? null));
   }
 
-  if (q.type === 'matrix') {
-    if (!ans) return false;
-
-    Object.entries(ans).forEach(([k, v]) => {
-      if (k === '__otherText') {
-        saveRows.push(basePayload(`${q.id} - Specifica (97.Altro)`, v, null));
-      } else {
-        const dom = `${q.id} - ${k}`;
-        saveRows.push(basePayload(dom, v, null));
-      }
-    });
+ if (q.type === 'matrix') {
+  if (!ans) {
+    $('#helper').text('Compila le risposte per continuare.');
+    return false;
   }
 
-  if (q.type === 'matrixPerItem') {
-    Object.entries(ans).forEach(([item, obj]) => {
-      Object.entries(obj).forEach(([colKey, val]) => {
-        const colLabel = (q.columns.find(c => c.key === colKey) || {}).label || colKey;
-        const dom = `${q.id} - ${item} / ${colLabel}`;
-        saveRows.push(basePayload(dom, val, null));
-      });
-    });
+  let i = 0;
+  Object.entries(ans).forEach(([rowLabel, value]) => {
+    if (rowLabel === '__otherText') return; // salta "Altro"
+
+    i++;
+    const dom = `${q.id}_${i}`; // es. Q017_1, Q017_2, ...
+    saveRows.push(basePayload(dom, value || '', null));
+  });
+
+  // Campo "Altro (specificare)" separato
+  if (ans.__otherText) {
+    saveRows.push(basePayload(`${q.id}_altro`, ans.__otherText, null));
+  }
+}
+
+if (q.type === 'matrixPerItem') {
+  if (!ans) {
+    $('#helper').text('Compila tutte le risposte per continuare.');
+    return false;
   }
 
-  if (q.type === 'ynList') {
-    Object.entries(ans).forEach(([k, v]) => {
-      const dom = `${q.id} - ${k}`;
-      saveRows.push(basePayload(dom, v, null));
+  const fullList = state.answers['Q009_lista'] || [];
+
+  // 🔹 Mappa colonne a ID domanda
+  const colMap = {
+    connessione: 'Q013',
+    tempo: 'Q014',
+    abilita: 'Q015',
+    frequenza: 'Q016',
+  };
+
+  // 🔹 Itera dispositivi e colonne
+  Object.entries(ans).forEach(([item, obj]) => {
+    Object.entries(obj).forEach(([colKey, val]) => {
+      const baseQ = colMap[colKey] || q.id;
+      const indexOriginal = fullList.indexOf(item) + 1; // es. Q013_2 se è il secondo dispositivo in Q009
+      const dom = `${baseQ}_${indexOriginal}`;
+      saveRows.push(basePayload(dom, val, null));
     });
-  }
+  });
+}
+
+if (q.type === 'ynList') {
+  let i = 0;
+  Object.entries(ans).forEach(([item, val]) => {
+    i++;
+    const dom = `${q.id}_${i}`; // es. Q020_1, Q020_2, ...
+    saveRows.push(basePayload(dom, val || '', null));
+  });
+}
 
   if (q.type === 'rank') {
     const ordered = ans.map((x, i) => `${i + 1}) ${x}`).join(' | ');
@@ -1828,6 +1877,10 @@ $('#backBtn').removeClass('hidden');
 
     // Avvio
     $(document).ready(()=>{
+      const q009 = Q.find(q => q.id === 'Q009');
+  if(q009){
+    state.answers['Q009_lista'] = q009.options.slice();
+  }
       renderCurrent();
     });
   </script>
