@@ -200,7 +200,7 @@ Q.unshift({
   {
     id: 'Q001',
     section: 'Informazione sociodemografiche',
-    text: 'Genere',
+    text: 'Potrebbe indicarmi il suo sesso',
     type: 'single',
     required: true,
     options: ['1.Maschio', '2.Femmina']
@@ -208,14 +208,14 @@ Q.unshift({
   {
     id: 'Q002',
     section: 'Informazione sociodemografiche',
-    text: 'Data di nascita',
+    text: 'Potrebbe indicarmi la sua data di nascita',
     type: 'date',
     required: true,
   },
   {
     id: 'Q003',
     section: 'Informazione sociodemografiche',
-    text: 'Regione di residenza',
+    text: 'Potrebbe indicarmi la sua regione di residenza',
     type: 'dropdown',
     required: true,
     options: [
@@ -340,7 +340,7 @@ options: [
     id:'Q010',
     showIf:{id:'Q009', equals:'96.Nessuno di questi'},
     section:'DISPOSITIVI',
-    text:'Di cosa avresti bisogno per imparare a usare un dispositivo digitale? (Risposta multipla)',
+    text:'Di cosa avrebbe bisogno per imparare a usare un dispositivo digitale? (Risposta multipla)',
     type:'multi',
     options:[
       '1.Avere un dispositivo personale',
@@ -355,7 +355,7 @@ options: [
     id:'Q011',
     showIf:{id:'Q009', equals:'96.Nessuno di questi'},
     section:'DISPOSITIVI',
-    text:'Quali difficoltà incontri (o pensi potresti incontrare) nell’imparare a usare un dispositivo digitale? (Risposta multipla)',
+    text:'Quali difficoltà incontra (o pensa potrebbe incontrare) nell’imparare a usare un dispositivo digitale? (Risposta multipla)',
     type:'multi',
     options:[
       '1.Difficoltà pratiche',
@@ -370,7 +370,7 @@ options: [
     id:'Q012',
     showIf:{id:'Q009', equals:'96.Nessuno di questi'},
     section:'DISPOSITIVI',
-    text:'Cosa pensi potrebbe aiutarti di più ad imparare a usare un dispositivo digitale? (Risposta multipla)',
+    text:'Cosa pensa potrebbe aiutarla di più ad imparare a usare un dispositivo digitale? (Risposta multipla)',
     type:'multi',
     options:[
       '1.Avere più tempo per fare pratica',
@@ -398,17 +398,17 @@ options: [
     },
     {
       key:'tempo',
-      label:'Da quanto tempo lo utilizzi?',
+      label:'Da quanto tempo lo utilizza?',
       choices:['1.Meno di 1 anno','2.Meno di 2 anni','3.Meno di 3 anni','4.Meno di 4 anni','5.4 anni o più','99.Non lo sa/Non vuole rispondere']
     },
     {
       key:'abilita',
-      label:'Come valuteresti la tua abilità nel suo utilizzo?',
+      label:'Come valuterebbe la sua abilità nel suo utilizzo?',
       choices:['1.Scarsa','2.Discreta','3.Buona','4.Molto buona','5.Ottima','99.Non lo sa/Non vuole rispondere']
     },
     {
       key:'frequenza',
-      label:'Con quale frequenza lo usi?',
+      label:'Con quale frequenza lo usa?',
       choices:['1.Ogni giorno o quasi ogni giorno','2.Almeno una volta alla settimana (ma non ogni giorno)','3.Almeno una volta al mese (ma non ogni settimana)','4.Almeno una volta ogni 3 mesi (ma non ogni mese)','5.Meno di una volta ogni 3 mesi','6.Mai','99.Non lo sa/Non vuole rispondere']
     }
   ],
@@ -422,7 +422,7 @@ options: [
       {id:'Q009', includes:'2.Computer portatile'}
     ],
     section:'DISPOSITIVI',
-    text:'Quale sistema operativo possiede il tuo computer?',
+    text:'Quale sistema operativo possiede il suo computer?',
     type:'multi',
     required:true,
     options:['1.Windows','2.IOS','3.Linux','97.Altro (specificare)','99.Non lo sa/Non vuole rispondere'],
@@ -439,7 +439,7 @@ options: [
   }
 },
     section:'DISPOSITIVI',
-    text:'Quali browser utilizzi sul tuo computer? (Risposta multipla)',
+    text:'Quali browser utilizza sul suo computer? (Risposta multipla)',
     type:'multi',
     options:['1.Google Chrome','2.Safari','3.Microsoft Edge','4.Mozilla Firefox','97.Altro (specificare)','99.Non lo sa/Non vuole rispondere'],
     allowOther: true,
@@ -456,7 +456,7 @@ options: [
   }
 },
     section:'DISPOSITIVI',
-    text:'Quali software o applicazioni usi più frequentemente sul computer? (Risposta multipla)',
+    text:'Quali software o applicazioni usa più frequentemente sul computer? (Risposta multipla)',
     type:'multi',
     options:[
       '1.Suite Office (Word, Excel, ecc.)',
@@ -474,7 +474,7 @@ options: [
     id:'Q020',
     showIf:{id:'Q019', includes:'1.Suite Office (Word, Excel, ecc.)'},
     section:'DISPOSITIVI',
-    text:'Quale programma della Suite Office utilizzi di più? (Risposta multipla)',
+    text:'Quale programma della Suite Office utilizza di più? (Risposta multipla)',
     type:'multi',
     options:['1.Microsoft Word','2.Microsoft Excel','3.Microsoft PowerPoint','3.Microsoft OneNote','97.Altro (specificare)','99.Non lo sa/Non vuole rispondere'],
     allowOther:true,
@@ -487,7 +487,7 @@ options: [
   { id:'Q009', includes:'3.Tablet' },
   ],
     section:'DISPOSITIVI',
-    text:'Quale sistema operativo possiede il tuo Tablet?',
+    text:'Quale sistema operativo possiede il suo Tablet?',
     type:'single',
     options:['1.Android','2.IOS','3.Windows Mobile','97.Altro (specificare)','99.Non lo sa/Non vuole rispondere'],
     image:null
@@ -501,7 +501,7 @@ options: [
   }
 ],
     section:'DISPOSITIVI',
-    text:'Quali browser utilizzi sul tuo Tablet? (Risposta multipla)',
+    text:'Quali browser utilizza sul suo Tablet? (Risposta multipla)',
     type:'multi',
     options:['1.Google Chrome','2.Safari','3.Samsung Internet','4.Mozilla Firefox','97.Altro (specificare)','99.Non lo sa/Non vuole rispondere'],
     image:null
@@ -513,7 +513,7 @@ options: [
       {id:'Q009', includes:'4.Smartphone (con touchscreen/schermo sensibile al tocco)'}
     ],
     section:'DISPOSITIVI',
-    text:'Quale sistema operativo possiede il tuo Smartphone?',
+    text:'Quale sistema operativo possiede il suo Smartphone?',
     type:'single',
     options:['1.Android','2.IOS','3.Windows Mobile','97.Altro (specificare)','99.Non lo sa/Non vuole rispondere'],
     image:null
@@ -527,7 +527,7 @@ options: [
   }
 ],
     section:'DISPOSITIVI',
-    text:'Quali browser utilizzi sul tuo Smartphone? (Risposta multipla)',
+    text:'Quali browser utilizza sul suo Smartphone? (Risposta multipla)',
     type:'multi',
     options:['1.Google Chrome','2.Safari','3.Samsung Internet','4.Mozilla Firefox','97.Altro (specificare)','99.Non lo sa/Non vuole rispondere'],
     image:null
@@ -542,7 +542,7 @@ options: [
   }
 ],
     section:'DISPOSITIVI',
-    text:'Come utilizzi la TV principalmente? (Risposta multipla)',
+    text:'Come utilizza la TV principalmente? (Risposta multipla)',
     type:'multi',
     options:[
       '1.Canali televisivi tradizionali',
@@ -568,7 +568,7 @@ options: [
   }
     ],
     section:'DISPOSITIVI',
-    text:'Quanto spesso utilizzi le funzioni “smart” della TV?',
+    text:'Quanto spesso utilizza le funzioni “smart” della TV?',
     type:'single',
     options:[
       '1.Ogni giorno o quasi ogni giorno',
@@ -600,7 +600,7 @@ options: [
     return Object.values(conn).some(v => v === true);
   }
 },
-  text:'Tramite quale connessione accedi a Internet? (Scelta multipla)',
+  text:'Tramite quale connessione accede a Internet? (Scelta multipla)',
   type:'multi',
   options:['1.Wi‑Fi di casa','2.Rete mobile (4G/5G)','3.Wi‑Fi pubblico','99.Non lo sa/Non vuole rispondere'],
   required:true,
@@ -617,7 +617,7 @@ options: [
   }
 },
     section:'INTERNET',
-    text:'Negli ultimi 3 mesi hai utilizzato Internet per acquistare beni o servizi?',
+    text:'Negli ultimi 3 mesi ha utilizzato Internet per acquistare beni o servizi?',
     type:'single',
     options:['1.Sì','2.No','99.Non lo sa/Non vuole rispondere'],
     image:null
@@ -626,7 +626,7 @@ options: [
     id:'Q029',
     showIf:{id:'Q028', equals:'1.Sì'},
     section:'INTERNET',
-    text:'Con che frequenza usi Internet per le seguenti attività?',
+    text:'Con che frequenza usa Internet per le seguenti attività?',
     type:'matrix',
     rows:[
       '1.Acquistare articoli fisici (abbigliamento, elettronica, libri, ecc.)',
@@ -644,7 +644,7 @@ options: [
  {
   id:'Q030',
   section:'INTERNET',
-  text:'Negli ultimi 3 mesi hai utilizzato Internet per comunicare con altre persone?',
+  text:'Negli ultimi 3 mesi ha utilizzato Internet per comunicare con altre persone?',
   type:'single',
   options:['1.Sì','2.No','99.Non lo sa/Non vuole rispondere'],
   image:null,
@@ -660,7 +660,7 @@ options: [
     id:'Q031',
     showIf:{id:'Q030', equals:'1.Sì'},
     section:'INTERNET',
-    text:'Con quale frequenza svolgi le seguenti attività online per comunicare con altre persone?',
+    text:'Con quale frequenza svolge le seguenti attività online per comunicare con altre persone?',
     type:'matrix',
     rows:[
       '1.Inviare o leggere e-mail',
@@ -682,7 +682,7 @@ options: [
   }
 },
     section:'INTERNET',
-    text:'Negli ultimi 3 mesi hai utilizzato Internet per informarti o cercare contenuti?',
+    text:'Negli ultimi 3 mesi ha utilizzato Internet per informarsi o cercare contenuti?',
     type:'single',
     options:['1.Sì','2.No','99.Non lo sa/Non vuole rispondere'],
     image:null
@@ -691,7 +691,7 @@ options: [
     id:'Q033',
     showIf:{id:'Q032', equals:'1.Sì'},
     section:'INTERNET',
-    text:'Con quale frequenza cerchi i seguenti contenuti?',
+    text:'Con quale frequenza cerca i seguenti contenuti?',
     type:'matrix',
     rows:[
       '1.Leggere notizie o articoli di attualità',
@@ -716,7 +716,7 @@ options: [
   }
 },
     section:'INTERNET',
-    text:'Negli ultimi 3 mesi hai utilizzato Internet per servizi pubblici?',
+    text:'Negli ultimi 3 mesi ha utilizzato Internet per servizi pubblici?',
     type:'single',
     options:['1.Sì','2.No','99..Non lo sa/Non vuole rispondere'],
     image:null
@@ -725,7 +725,7 @@ options: [
     id:'Q035',
     showIf:{id:'Q034', equals:'1.Sì'},
     section:'INTERNET',
-    text:'Con quale frequenza svolgi le seguenti operazioni?',
+    text:'Con quale frequenza svolge le seguenti operazioni?',
     type:'matrix',
     rows:[
       '1.Prenotare visite mediche online',
@@ -746,7 +746,7 @@ options: [
   }
 },
     section:'INTERNET',
-    text:'Negli ultimi 3 mesi hai utilizzato Internet per monitorare o gestire conti bancari o patrimonio finanziario?',
+    text:'Negli ultimi 3 mesi ha utilizzato Internet per monitorare o gestire conti bancari o patrimonio finanziario?',
     type:'single',
     options:['1.Sì','2.No','99.Non lo sa/Non vuole rispondere'],
     image:null
@@ -755,7 +755,7 @@ options: [
     id:'Q037',
     showIf:{id:'Q036', equals:'1.Sì'},
     section:'INTERNET',
-    text:'Indica con che frequenza svolgi le seguenti operazioni.',
+    text:'Indica con che frequenza svolge le seguenti operazioni.',
     type:'matrix',
     rows:[
       '1.Controllare il saldo del conto bancario',
@@ -778,14 +778,14 @@ options: [
       {id:'Q007', equals:'2.Lavoratore dipendente o indipendente (incluso lavoro in attività di famiglia)'}
     ],
     section:'LAVORO',
-    text:'Rispondi alle seguenti domande.',
+    text:'Risponda alle seguenti domande.',
     type:'ynList',
     items:[
-      '1.Hai mai utilizzato un computer per lavoro?',
-      '2.Hai mai partecipato a corsi di formazione online?',
-      '3.Hai mai partecipato a riunioni online?',
-      '4.Hai mai utilizzato strumenti di condivisione file (Google Drive, Dropbox)?',
-      '5.Lavori o hai lavorato mai in smart working?'
+      '1.Ha mai utilizzato un computer per lavoro?',
+      '2.Ha mai partecipato a corsi di formazione online?',
+      '3.Ha mai partecipato a riunioni online?',
+      '4.Ha mai utilizzato strumenti di condivisione file (Google Drive, Dropbox)?',
+      '5.Lavora o ha lavorato mai in smart working?'
     ],
     image:null
   },
@@ -796,7 +796,7 @@ options: [
       {id:'Q007', equals:'2.Lavoratore dipendente o indipendente (incluso lavoro in attività di famiglia)'}
     ],
     section:'LAVORO',
-    text:'Come valuteresti le tue competenze informatiche nell’utilizzo delle seguenti applicazioni?',
+    text:'Come valuterebbe le sue competenze informatiche nell’utilizzo delle seguenti applicazioni?',
     type:'matrix',
     rows:[
       '1.Videoscrittura (es. Word)',
@@ -820,7 +820,7 @@ options: [
       {id:'Q007', equals:'5.Casalingo/a'}
     ],
     section:'LAVORO',
-    text:'Hai mai svolto attività lavorativa retribuita?',
+    text:'Ha mai svolto attività lavorativa retribuita?',
     type:'single',
     options:['1.Sì','2.No','99.Non lo sa/Non vuole rispondere'],
     image:null
@@ -829,14 +829,14 @@ options: [
     id:'Q041',
     showIf:{id:'Q040', equals:'1.Sì'},
     section:'LAVORO',
-    text:'Rispondi alle seguenti domande.',
+    text:'Risponda alle seguenti domande.',
     type:'ynList',
     items:[
-      '1.Hai mai utilizzato un computer per lavoro?',
-      '2.Hai mai partecipato a corsi di formazione online?',
-      '3.Hai mai partecipato a riunioni online?',
-      '4.Hai mai utilizzato strumenti di condivisione file (Google Drive, Dropbox)?',
-      '5.Hai mai lavorato in smart working?'
+      '1.Ha mai utilizzato un computer per lavoro?',
+      '2.Ha mai partecipato a corsi di formazione online?',
+      '3.Ha mai partecipato a riunioni online?',
+      '4.Ha mai utilizzato strumenti di condivisione file (Google Drive, Dropbox)?',
+      '5.Ha mai lavorato in smart working?'
     ],
     image:null
   },
@@ -844,7 +844,7 @@ options: [
     id:'Q042',
     showIf:{id:'Q040', equals:'1.Sì'},
     section:'LAVORO',
-    text:'Come valuteresti le tue competenze informatiche nell’utilizzo delle seguenti applicazioni o software?',
+    text:'Come valuterebbe le sue competenze informatiche nell’utilizzo delle seguenti applicazioni o software?',
     type:'matrix',
     rows:[
       '1.Videoscrittura (es. Word)',
@@ -873,7 +873,7 @@ options: [
   }
 },
         section:'SICUREZZA',
-        text:'Solitamente prendi precauzioni per proteggere i tuoi dati online?',
+        text:'Solitamente prende precauzioni per proteggere i suoi dati online?',
         type:'single',
         options:['1.Sì','2.No','99.Non lo sa/Non vuole rispondere'],
         image:null
@@ -882,13 +882,13 @@ options: [
         id:'Q044',
         showIf:{id:'Q043', equals:'1.Sì'},
         section:'SICUREZZA',
-        text:'Seleziona le pratiche che adotti (Sì/No per ciascuna).',
+        text:'Selezioni le pratiche che adotta (Sì/No per ciascuna).',
         type:'ynList',
         items:[
-          '1.Utilizzi password complesse e diverse?',
-          '2.Cambi regolarmente le password?',
-          '3.Hai mai installato e/o aggiornato un antivirus?',
-          '4.Controlli solitamente le impostazioni di privacy sui social?'
+          '1.Utilizza password complesse e diverse?',
+          '2.Cambia regolarmente le password?',
+          '3.Ha mai installato e/o aggiornato un antivirus?',
+          '4.Controlla solitamente le impostazioni di privacy sui social?'
         ],
         image:null
       }
@@ -1007,7 +1007,7 @@ options: [
     id: 'Q052',
     section: 'TEST',
     type: 'task',
-    text: 'Copia il testo riportato qui sotto e incollalo nel campo di testo. Se non sei in grado di completare l’attività puoi lasciare il campo vuoto oppure digitare “non lo so fare”.',
+    text: 'Copi il testo riportato qui sotto e incollalo nel campo di testo. Se non è in grado di completare l’attività può lasciare il campo vuoto oppure digitare “non lo so fare”.',
     taskKind: 'copypaste',
     taskText: 'Digitalizzazione',
     correct: 'Digitalizzazione',
@@ -1017,7 +1017,7 @@ options: [
     id: 'Q053',
     section: 'TEST',
     type: 'single',
-    text: 'Con l’ausilio del PC dell’intervistatore, crea una cartella sul desktop.',
+    text: 'Con l’ausilio del PC dell’intervistatore, crei una cartella sul desktop.',
     options: [
       '1 (Non lo sa fare)',
       '2 (Lo fa solo con aiuto costante)',
@@ -1036,7 +1036,7 @@ options: [
       {id: 'Q053', equals: '4 (Lo fa quasi in autonomia)'},
       {id: 'Q053', equals: '5 (Lo fa in piena autonomia)'}
     ],
-    text: 'Inserisci all’interno della cartella appena creata il file “test.txt”.',
+    text: 'Inserisca all’interno della cartella appena creata il file “test.txt”.',
     options: [
       '1 (Non lo sa fare)',
       '2 (Lo fa solo con aiuto costante)',
@@ -1055,7 +1055,7 @@ options: [
       {id: 'Q054', equals: '4 (Lo fa quasi in autonomia)'},
       {id: 'Q054', equals: '5 (Lo fa in piena autonomia)'}
     ],
-    text: 'Trasforma il file “test.txt” in formato “test.csv”.',
+    text: 'Trasformi il file “test.txt” in formato “test.csv”.',
     options: [
       '1 (Non lo sa fare)',
       '2 (Lo fa solo con aiuto costante)',
@@ -1068,7 +1068,7 @@ options: [
     id: 'Q056',
     section: 'TEST',
     type: 'single',
-    text: 'Modifica la luminosità dello schermo.',
+    text: 'Modifichi la luminosità dello schermo.',
     options: [
       '1 (Non lo sa fare)',
       '2 (Lo fa solo con aiuto costante)',
@@ -1081,7 +1081,7 @@ options: [
     id: 'Q057',
     section: 'TEST',
     type: 'single',
-    text: 'Controlla le reti wi-fi che sono disponibili nelle vicinanze, cioè quelle in cui potresti collegarti.',
+    text: 'Controlli le reti wi-fi che sono disponibili nelle vicinanze, cioè quelle in cui potrebbe collegarsi.',
     options: [
       '1 (Non lo sa fare)',
       '2 (Lo fa solo con aiuto costante)',
@@ -1094,7 +1094,7 @@ options: [
     id: 'Q058',
     section: 'TEST',
     type: 'single',
-    text: 'Apri un motore di ricerca internet e cerca le previsioni meteo della tua città.',
+    text: 'Apra un motore di ricerca internet e cerchi le previsioni meteo della sua città.',
     options: [
       '1 (Non lo sa fare)',
       '2 (Lo fa solo con aiuto costante)',
@@ -1113,7 +1113,7 @@ options: [
       {id: 'Q058', equals: '4 (Lo fa quasi in autonomia)'},
       {id: 'Q058', equals: '5 (Lo fa in piena autonomia)'}
     ],
-    text: 'Aggiungi il sito visitato nella domanda precedente alla barra dei preferiti (o segnalibri).',
+    text: 'Aggiunga il sito visitato nella domanda precedente alla barra dei preferiti (o segnalibri).',
     options: [
       '1 (Non lo sa fare)',
       '2 (Lo fa solo con aiuto costante)',
@@ -1126,7 +1126,7 @@ options: [
     id: 'Q060',
     section: 'TEST',
     type: 'single',
-    text: 'Apri Word e in un foglio vuoto scrivi la parola “digitalizzazione” con carattere 24 e mettila in grassetto.',
+    text: 'Apra Word e in un foglio vuoto scriva la parola “digitalizzazione” con carattere 24 e la metta in grassetto.',
     options: [
       '1 (Non lo sa fare)',
       '2 (Lo fa solo con aiuto costante)',
@@ -1139,7 +1139,7 @@ options: [
     id: 'Q061',
     section: 'TEST',
     type: 'single',
-    text: 'Apri il foglio Excel intitolato “Test” e somma i numeri dati nelle celle A1 e A2, all’interno della cella A3.',
+    text: 'Apra il foglio Excel intitolato “Test” e sommi i numeri dati nelle celle A1 e A2, all’interno della cella A3.',
     options: [
       '1 (Non lo sa fare)',
       '2 (Lo fa solo con aiuto costante)',
@@ -1154,7 +1154,7 @@ options: [
   {
     id:'Q062',
     section:'FINALE',
-    text:'Indica in che misura sei d’accordo o in disaccordo con le seguenti affermazioni:',
+    text:'Indichi in che misura è d’accordo o in disaccordo con le seguenti affermazioni:',
     type:'matrix',
     rows:[
       '1.Mi piace usare i dispositivi digitali',
